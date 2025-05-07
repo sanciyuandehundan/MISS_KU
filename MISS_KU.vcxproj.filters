@@ -18,5 +18,11 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="xiahui.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="chenpi.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
