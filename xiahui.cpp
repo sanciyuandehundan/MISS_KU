@@ -8,5 +8,13 @@ using namespace std;
 
 //ru 需要输入内容的变量的指针 max 输入最大值 min 输入最小值，要求输入错误不会导致崩溃，且再次出现输入提示，无需返回值
 void input(int* ru, int max, int min) {
+	while (1) {
+		string s;
+		cin >> s;
+		if (*ru > max || *ru < min) {
+			printf("请输入%d到%d之间的数!\n", min, max);
 
+		}
+		else break;
+	}
 }
