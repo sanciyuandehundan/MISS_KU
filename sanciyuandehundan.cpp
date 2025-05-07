@@ -9,3 +9,6 @@
 #include "sanciyuandehundan.h"
 using namespace std;
 
+class Score{
+
+};

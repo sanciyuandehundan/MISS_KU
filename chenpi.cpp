@@ -10,6 +10,21 @@
 using namespace std;
 
 //输出功能介绍，没有输入值，没有返回值
-void introduce() {
+void introduce_main() {
+
+}
+void introduce_1() {
+
+}
+void introduce_2() {
+
+}
+void introduce_3() {
+
+}
+void introduce_4() {
+
+}
+void introduce_5() {
 
 }
