@@ -28,4 +28,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="chenpi.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="xiahui.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="sanciyuandehundan.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>

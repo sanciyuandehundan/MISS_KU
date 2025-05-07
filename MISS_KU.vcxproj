@@ -76,6 +76,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\a0905\source\repos\MISS_KU;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -131,6 +132,11 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="sanciyuandehundan.cpp" />
     <ClCompile Include="xiahui.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="chenpi.h" />
+    <ClInclude Include="sanciyuandehundan.h" />
+    <ClInclude Include="xiahui.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
