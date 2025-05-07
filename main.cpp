@@ -13,7 +13,7 @@ int ru;
 int main()
 {
 	while (1) {
-		introduce();
+		introduce_main();
 		input(&ru,5,1);
 		switch (ru)
 		{
@@ -26,10 +26,6 @@ int main()
 		case 3://成绩导出
 			break;
 		case 4://成绩查询
-			break;
-		case 5://成绩分析
-			break;
-		default:
 			break;
 		}
 	}

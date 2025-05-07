@@ -10,5 +10,5 @@
 using namespace std;
 
 class Score{
-
+	
 };
