@@ -8,10 +8,12 @@
 #include "chenpi.h"
 #include "sanciyuandehundan.h"
 using namespace std;
+
+int ru;
 int main()
 {
 	while (1) {
-		//¹¦ÄÜ½éÉÜ
-		//
+		introduce();
+		input(&ru,4,1);
 	}
 }

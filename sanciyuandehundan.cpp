@@ -4,5 +4,8 @@
 #include <cstdlib>
 #include<stdio.h>
 #include<stdlib.h>
+#include "xiahui.h"
+#include "chenpi.h"
+#include "sanciyuandehundan.h"
 using namespace std;
 
