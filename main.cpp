@@ -7,5 +7,8 @@
 using namespace std;
 int main()
 {
-
+	while (1) {
+		//¹¦ÄÜ½éÉÜ
+		//
+	}
 }
