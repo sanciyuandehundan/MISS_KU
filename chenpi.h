@@ -1,6 +1,7 @@
 #pragma once
-void introduce_main();
-void introduce_input();
-void introduce_import();
-void introduce_export();
-void introduce_view();
+void Top(const char* c);
+void Introduce_main();
+void Introduce_input();
+void Introduce_import();
+void Introduce_export();
+void Introduce_view();

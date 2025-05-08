@@ -9,32 +9,43 @@
 #include "sanciyuandehundan.h"
 using namespace std;
 
+
+
+void Top(const char* c)
+{
+	cout << "——————" << c << "——————" << endl;
+}
+
 //输出功能介绍，没有输入值，没有返回值
-void introduce_main() {
+void Introduce_main() {
 	system("cls");
-	cout << "射箭成绩统计与分析系统" << endl;
+	Top("射箭成绩统计与分析系统");
 	cout << "1.手动输入成绩" << endl;
 	cout << "2.导入成绩文件" << endl;
 	cout << "3.导出成绩文件" << endl;
 	cout << "4.查看过往成绩" << endl;
 	cout << "要进行何种操作:";
+	input()
 }
-void introduce_input()
+void Introduce_input()
 {
 	system("cls");
-	cout << "" << endl;
+	Top("手动输入数据");
 	cout << "" << endl;
 	cout << "" << endl;
 	cout << "" << endl;
 	cout << "" << endl;
 	cout << "" << endl;
 }
-void introduce_import()
+void Introduce_import()
 {
+	Top("导入成绩文件");
 }
-void introduce_export()
+void Introduce_export()
 {
+	Top("导出成绩文件");
 }
-void introduce_view()
+void Introduce_view()
 {
+	Top("查看过往成绩");
 }

@@ -16,7 +16,7 @@ class Score{
 void Menu_main(int* ru)
 {
 	while (1) {
-		introduce_main();
+		Introduce_main();
 		input(ru, 4, 1);
 		switch (*ru)
 		{
@@ -38,24 +38,24 @@ void Menu_main(int* ru)
 
 void Menu_input(int* ru)
 {
-	introduce_input();
+	Introduce_input();
 	input(ru, 11, 0);
 }
 
 void Menu_import(int* ru)
 {
-	introduce_import();
+	Introduce_import();
 	input(ru, 2, 1);
 }
 
 void Menu_export(int* ru)
 {
-	introduce_export();
+	Introduce_export();
 	input(ru, 2, 1);
 }
 
 void Menu_view(int* ru)
 {
-	introduce_view();
+	Introduce_view();
 	input(ru, 2, 1);
 }
