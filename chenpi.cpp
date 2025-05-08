@@ -11,20 +11,30 @@ using namespace std;
 
 //输出功能介绍，没有输入值，没有返回值
 void introduce_main() {
-
+	system("cls");
+	cout << "射箭成绩统计与分析系统" << endl;
+	cout << "1.手动输入成绩" << endl;
+	cout << "2.导入成绩文件" << endl;
+	cout << "3.导出成绩文件" << endl;
+	cout << "4.查看过往成绩" << endl;
+	cout << "要进行何种操作:";
 }
-void introduce_1() {
-
+void introduce_input()
+{
+	system("cls");
+	cout << "" << endl;
+	cout << "" << endl;
+	cout << "" << endl;
+	cout << "" << endl;
+	cout << "" << endl;
+	cout << "" << endl;
 }
-void introduce_2() {
-
+void introduce_import()
+{
 }
-void introduce_3() {
-
+void introduce_export()
+{
 }
-void introduce_4() {
-
-}
-void introduce_5() {
-
+void introduce_view()
+{
 }

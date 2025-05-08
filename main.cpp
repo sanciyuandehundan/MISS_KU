@@ -12,21 +12,5 @@ using namespace std;
 int ru;
 int main()
 {
-	while (1) {
-		introduce_main();
-		input(&ru,5,1);
-		switch (ru)
-		{
-		case 1://成绩输入
-			
-			break;
-		case 2://成绩导入
-			
-			break;
-		case 3://成绩导出
-			break;
-		case 4://成绩查询
-			break;
-		}
-	}
+	Menu_main(&ru);
 }

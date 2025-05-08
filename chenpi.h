@@ -1,6 +1,6 @@
 #pragma once
 void introduce_main();
-void introduce_1();
-void introduce_2();
-void introduce_3();
-void introduce_4();
+void introduce_input();
+void introduce_import();
+void introduce_export();
+void introduce_view();
