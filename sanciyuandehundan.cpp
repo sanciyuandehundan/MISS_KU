@@ -4,58 +4,121 @@
 #include <cstdlib>
 #include<stdio.h>
 #include<stdlib.h>
+#include<istream>
+#include<string>
 #include "xiahui.h"
 #include "chenpi.h"
 #include "sanciyuandehundan.h"
 using namespace std;
 
-class Score{
-	
-};
 
-void Menu_main(int* ru)
+void Menu_main(int* ru, Score* s)
 {
 	while (1) {
-		Introduce_main();
-		input(ru, 4, 1);
+		Introduce_main(s);
+		input(ru, 5, 1);
 		switch (*ru)
 		{
 		case 1://成绩输入
-			Menu_input(ru);
+			Menu_input(ru,s);
 			break;
 		case 2://成绩导入
-			Menu_import(ru);
+			Menu_import(ru, s);
 			break;
 		case 3://成绩导出
-			Menu_export(ru);
+			Menu_export(ru, s);
 			break;
 		case 4://成绩查询
-			Menu_view(ru);
+			Menu_view(ru, s);
+			break;
+		case 5://成绩归属
+			Menu_scoremaster(ru, s);
 			break;
 		}
 	}
 }
 
-void Menu_input(int* ru)
+void Menu_input(int* ru, Score* s)
 {
-	Introduce_input();
-	input(ru, 11, 0);
+	bool con = true;
+	while (con) {
+		Introduce_input(s);
+		input(ru, 6, 1);
+		switch (*ru)
+		{
+		case 1:cout << "未实现" << endl; system("pause"); break;
+		case 2:cout << "未实现" << endl; system("pause"); break;
+		case 3:cout << "未实现" << endl; system("pause"); break;
+		case 4:cout << "未实现" << endl; system("pause"); break;
+		case 5:cout << "未实现" << endl; system("pause"); break;
+		case 6:con = false; break;
+		default:
+			break;
+		}
+	}
 }
 
-void Menu_import(int* ru)
+void Menu_import(int* ru, Score* s)
 {
-	Introduce_import();
-	input(ru, 2, 1);
+	bool con = true;
+	while (con) {
+		Introduce_import(s);
+		input(ru, 2, 1);
+		switch (*ru)
+		{
+		case 1:cout << "未实现" << endl; system("pause"); break;
+		case 2:con = false; break;
+		default:
+			break;
+		}
+	}
 }
 
-void Menu_export(int* ru)
+void Menu_export(int* ru, Score* s)
 {
-	Introduce_export();
-	input(ru, 2, 1);
+	bool con = true;
+	while (con) {
+		Introduce_export(s);
+		input(ru, 2, 1);
+		switch (*ru)
+		{
+		case 1:cout << "未实现" << endl; system("pause"); break;
+		case 2:con = false; break;
+		default:
+			break;
+		}
+	}
 }
 
-void Menu_view(int* ru)
+void Menu_view(int* ru, Score* s)
 {
-	Introduce_view();
-	input(ru, 2, 1);
+	Introduce_view(s);
+	
+}
+
+void Menu_scoremaster(int* ru, Score* s)
+{
+	bool con = true;
+	while (con) {
+		Introduce_scoremaster(s);
+		input(ru, 3, 1);
+		switch (*ru)
+		{
+		case 1:cout << "未实现" << endl; system("pause"); break;
+		case 2:cout << "未实现" << endl; system("pause"); break;
+		case 3:con = false; break;
+		default:
+			break;
+		}
+	}
+}
+
+void Score::Show()
+{
+	cout << "展示成绩信息,未实现" << endl;
+}
+
+Score::Score()
+{
+
 }
