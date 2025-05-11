@@ -1,0 +1,36 @@
+{
+  "master": "ÕÅÈı",
+  "games": [
+    {
+      "target": 2,
+      "distance": 40,
+      "round_num": 2,
+      "arrow_num": 6,
+      "round": [
+        {
+          "target": 2,
+          "distance": 40,
+          "arrow_num": 3
+        },
+        {
+          "target": 2,
+          "distance": 40,
+          "arrow_num": 3
+        }
+      ]
+    },
+    {
+      "target": 3,
+      "distance": 60,
+      "round_num": 1,
+      "arrow_num": 6,
+      "round": [
+        {
+          "target": 3,
+          "distance": 60,
+          "arrow_num": 6
+        }
+      ]
+    }
+  ]
+}

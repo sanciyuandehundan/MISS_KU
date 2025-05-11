@@ -14,11 +14,6 @@ using namespace std;
 class Score {
 public:
 	enum Target { hou = 1, huan_40_full = 2, huan_60_full = 3, huan_80_full = 4, huan_122_full = 5, huan_40_self = 6, huan_60_self = 7, huan_80_self = 8 };
-
-	string master;
-
-	void Show();
-	Score();
 	class Round {
 		Target target;
 		int distance;
@@ -31,6 +26,12 @@ public:
 		int arrow_num;
 		Round* round[24];
 	};
+	string master;
+	Game* list_hand;
+
+	void Show();
+	Score();
+
 };
 void Menu_main(int *ru,Score* s);
 void Menu_input(int* ru, Score* s);
