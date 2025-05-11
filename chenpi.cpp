@@ -24,6 +24,7 @@ void Introduce_main() {
 	cout << "2.导入成绩文件" << endl;
 	cout << "3.导出成绩文件" << endl;
 	cout << "4.查看过往成绩" << endl;
+	cout << "5.选择成绩" << endl;
 	cout << "要进行何种操作:";
 }
 void Introduce_input()
