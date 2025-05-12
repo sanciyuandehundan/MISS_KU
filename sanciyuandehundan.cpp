@@ -113,12 +113,50 @@ void Menu_scoremaster(int* ru, Score* s)
 	}
 }
 
+bool Score::add_game(Game* ga)
+{
+	if (list_hand == nullptr)return false;
+	list_hand->get_last()->add_next(ga);
+	return true;
+}
+
 void Score::Show()
 {
 	cout << "展示成绩信息,未实现" << endl;
 }
 
-Score::Score()
+Score::Score(string* ma)
 {
+	master = ma;
+	list_hand = nullptr;
+}
 
+Score::Round::Round()
+{
+}
+
+bool Score::Round::add_arrow(Arrow* arr)
+{
+	return false;
+}
+
+bool Score::Game::add_round(Round* ro)
+{
+	return false;
+}
+
+Score::Game* Score::Game::get_last()
+{
+	return this->next == nullptr ? this : this->next->get_last();
+}
+
+bool Score::Game::add_next(Game* ga)
+{
+	next = ga;
+	ga->prev = this;
+	return false;
+}
+
+Score::Arrow::Arrow()
+{
 }
