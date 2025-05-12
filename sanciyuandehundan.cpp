@@ -102,15 +102,7 @@ void Menu_scoremaster(int* ru, Score* s)
 
 bool Score::Import(string s)
 {
-	ifstream file(s);
-	if (!file.is_open()) {
-		cerr << "Failed to open the file." << endl;
-		return;
-	}
-	json j;
-	file >> j;
-	file.close();
-	Import(j["path"]);
+	
 }
 
 bool Score::add_game(Game* ga)
@@ -135,15 +127,7 @@ void Score::Show()
 
 Score::Score()
 {
-	ifstream file("default.json");
-	if (!file.is_open()) {
-		cerr << "Failed to open the file." << endl;
-		return;
-	}
-	json j;
-	file >> j;
-	file.close();
-	Import(j["path"]);
+	Import((*open_json("default.json"))["path"]);
 }
 
 Score::Round::Round(Target t, int d, int a)
