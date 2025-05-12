@@ -38,7 +38,10 @@
     <ClInclude Include="sanciyuandehundan.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
+    <ClInclude Include="including.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Downloads\json.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

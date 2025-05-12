@@ -105,6 +105,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -134,8 +135,9 @@
     <ClCompile Include="xiahui.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\Downloads\json.hpp" />
     <ClInclude Include="chenpi.h" />
-    <ClInclude Include="resource.h" />
+    <ClInclude Include="including.h" />
     <ClInclude Include="sanciyuandehundan.h" />
     <ClInclude Include="xiahui.h" />
   </ItemGroup>

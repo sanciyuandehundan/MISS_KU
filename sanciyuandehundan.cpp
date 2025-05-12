@@ -1,16 +1,4 @@
-#define  _CRT_SECURE_NO_WARNINGS
-#include <iostream>
-#include <ctime>
-#include <cstdlib>
-#include<stdio.h>
-#include<stdlib.h>
-#include<istream>
-#include<string>
-#include "xiahui.h"
-#include "chenpi.h"
-#include "sanciyuandehundan.h"
-using namespace std;
-
+#include "including.h"
 
 void Menu_main(int* ru, Score* s)
 {
@@ -93,7 +81,6 @@ void Menu_export(int* ru, Score* s)
 void Menu_view(int* ru, Score* s)
 {
 	Introduce_view(s);
-	
 }
 
 void Menu_scoremaster(int* ru, Score* s)
@@ -115,8 +102,15 @@ void Menu_scoremaster(int* ru, Score* s)
 
 bool Score::Import(string s)
 {
-
-	return false;
+	ifstream file(s);
+	if (!file.is_open()) {
+		cerr << "Failed to open the file." << endl;
+		return;
+	}
+	json j;
+	file >> j;
+	file.close();
+	Import(j["path"]);
 }
 
 bool Score::add_game(Game* ga)
@@ -128,25 +122,43 @@ bool Score::add_game(Game* ga)
 
 void Score::Show()
 {
-	cout << "展示成绩信息,未实现" << endl;
+	Game* temp=list_hand;
+	cout << "成绩归属者:" << master->c_str()<<endl;
+	cout << "总轮数:" << game_num<<endl;
+	cout << "总组数:" << round_num_all<<endl;
+	cout << "总箭数:" << arrow_num_all<<endl;
+	cout << "离散系数(越小越好):" << lisan << endl;
+	for (long long i = 0; i < game_num; i++) {
+		
+	}
 }
 
-Score::Score(string* ma)
+Score::Score()
 {
-	master = ma;
-	list_hand = nullptr;
+	ifstream file("default.json");
+	if (!file.is_open()) {
+		cerr << "Failed to open the file." << endl;
+		return;
+	}
+	json j;
+	file >> j;
+	file.close();
+	Import(j["path"]);
 }
 
-Score::Round::Round()
+Score::Round::Round(Target t, int d, int a)
 {
+	target = t;
+	distance = d;
+	arrow_num = a;
 }
 
-bool Score::Round::add_arrow(Arrow* arr)
+bool Score::Round::add_arrow(Arrow* arr)//aaaaaa
 {
 	return false;
 }
 
-bool Score::Game::add_round(Round* ro)
+bool Score::Game::add_round(Round* ro)//aaaaaa
 {
 	return false;
 }
@@ -156,6 +168,11 @@ Score::Game* Score::Game::get_last()
 	return this->next == nullptr ? this : this->next->get_last();
 }
 
+Score::Game* Score::Game::get_anchor(int num)
+{
+	return num ? next->get_anchor(num - 1) : this;
+}
+
 bool Score::Game::add_next(Game* ga)
 {
 	next = ga;
@@ -163,6 +180,8 @@ bool Score::Game::add_next(Game* ga)
 	return false;
 }
 
-Score::Arrow::Arrow()
+Score::Arrow::Arrow(int r, int p)
 {
+	ring = r;
+	position = p;
 }

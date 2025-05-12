@@ -1,15 +1,4 @@
-#define  _CRT_SECURE_NO_WARNINGS
-#include <iostream>
-#include <ctime>
-#include <cstdlib>
-#include<stdio.h>
-#include<stdlib.h>
-#include<istream>
-#include<string>
-#include "xiahui.h"
-#include "chenpi.h"
-#include "sanciyuandehundan.h"
-using namespace std;
+#include "including.h"
 
 void input(int* ru, int max, int min) {
     string input_str;
@@ -29,4 +18,17 @@ void input(int* ru, int max, int min) {
             cout << "ÇëÊäÈë" << min << '~' << max << "Å¶~~:";
         }
     } while (!valid);
+}
+
+json* open_json(string s)
+{
+    ifstream file("default.json");
+    if (!file.is_open()) {
+        cerr << "Failed to open the file." << endl;
+        return;
+    }
+    json j;
+    file >> j;
+    file.close();
+    return &j;
 }
