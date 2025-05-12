@@ -29,6 +29,7 @@ public:
 	string master;
 	Game* list_hand;
 
+	bool Import(string s);
 	void Show();
 	Score();
 

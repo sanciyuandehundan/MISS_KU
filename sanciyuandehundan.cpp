@@ -113,6 +113,12 @@ void Menu_scoremaster(int* ru, Score* s)
 	}
 }
 
+bool Score::Import(string s)
+{
+
+	return false;
+}
+
 void Score::Show()
 {
 	cout << "展示成绩信息,未实现" << endl;

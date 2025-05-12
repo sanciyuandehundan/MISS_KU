@@ -15,5 +15,6 @@ int ru;
 int main()
 {
 	Score* score = new Score();
+	
 	Menu_main(&ru, score);
 }

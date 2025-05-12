@@ -135,10 +135,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="chenpi.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="sanciyuandehundan.h" />
     <ClInclude Include="xiahui.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="default.json">
+      <SubType>
+      </SubType>
+    </None>
     <None Include="ex.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
