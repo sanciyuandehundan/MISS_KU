@@ -105,6 +105,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -129,14 +130,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="chenpi.cpp" />
+    <ClCompile Include="including.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="sanciyuandehundan.cpp" />
     <ClCompile Include="xiahui.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\Downloads\json.hpp" />
     <ClInclude Include="chenpi.h" />
+    <ClInclude Include="including.h" />
     <ClInclude Include="sanciyuandehundan.h" />
     <ClInclude Include="xiahui.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="default.json">
+      <SubType>
+      </SubType>
+    </None>
+    <None Include="ex.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

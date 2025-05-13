@@ -27,6 +27,9 @@
     <ClCompile Include="sanciyuandehundan.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="including.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="chenpi.h">
@@ -38,5 +41,19 @@
     <ClInclude Include="sanciyuandehundan.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="including.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Downloads\json.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ex.json">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="default.json">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
 </Project>
