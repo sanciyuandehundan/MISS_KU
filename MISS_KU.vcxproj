@@ -130,6 +130,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="chenpi.cpp" />
+    <ClCompile Include="including.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="sanciyuandehundan.cpp" />
     <ClCompile Include="xiahui.cpp" />

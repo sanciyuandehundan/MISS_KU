@@ -1,5 +1,7 @@
 #include "including.h"
-
+#include "xiahui.h"
+#include "chenpi.h"
+#include "sanciyuandehundan.h"
 
 void Top(const char* c)
 {
@@ -7,7 +9,7 @@ void Top(const char* c)
 }
 
 void Introduce_main(Score* s) {
-	system("cls");
+	//system("cls");
 	Top("射箭成绩统计与分析系统");
 	cout << "1.手动输入成绩" << endl;
 	cout << "2.导入成绩文件" << endl;

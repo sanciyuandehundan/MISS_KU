@@ -1,4 +1,7 @@
 #include "including.h"
+#include "xiahui.h"
+#include "chenpi.h"
+#include "sanciyuandehundan.h"
 
 void Menu_main(int* ru, Score* s)
 {
@@ -100,14 +103,39 @@ void Menu_scoremaster(int* ru, Score* s)
 	}
 }
 
-bool Score::Import(string s)
+bool Score::Import(string filename)
 {
-	
+	json* j = open_json(filename);
+	this->master = new string((*j)["master"]);
+	this->game_num = (*j)["game_num"];
+	this->round_num_all = (*j)["round_num_all"];
+	this->arrow_num_all = (*j)["arrow_num_all"];
+	this->lisan = (*j)["lisan"];
+	for (json& game_json : (*j)["game"]) {
+		Game* game = new Game();
+		game->target = static_cast<Target>(game_json["target"]);
+		game->distance = game_json["distance"];
+		game->round_num = game_json["round_num"];
+		game->arrow_num = game_json["arrow_num"];
+
+		for (json& round_json : game_json["round"]) {
+			Round* round = new Round(static_cast<Target>(round_json["target"]), round_json["distance"], round_json["arrow_num"]);
+
+			for (json& arrow_json : round_json["arrow"]) {
+				round->add_arrow(new Arrow(arrow_json["ring"], arrow_json["position"]));
+			}
+			game->add_round(round);
+		}
+		this->add_game(game);
+	}
+	return true;
 }
 
 bool Score::add_game(Game* ga)
 {
-	if (list_hand == nullptr)return false;
+	if (list_hand == nullptr) {
+		list_hand = ga;
+	}
 	list_hand->get_last()->add_next(ga);
 	return true;
 }

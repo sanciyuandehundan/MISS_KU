@@ -1,18 +1,7 @@
 #pragma once
-#define  _CRT_SECURE_NO_WARNINGS
-#include <iostream>
-#include <ctime>
-#include <cstdlib>
-#include<stdio.h>
-#include<stdlib.h>
-#include<istream>
-#include <fstream>
-#include<string>
+#include "including.h"
 #include "xiahui.h"
 #include "sanciyuandehundan.h"
-#include "json.hpp"
-using json = nlohmann::json;
-using namespace std;
 
 /*
 输出左右被线条包围的标题

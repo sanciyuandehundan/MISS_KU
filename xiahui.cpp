@@ -1,4 +1,7 @@
 #include "including.h"
+#include "xiahui.h"
+#include "chenpi.h"
+#include "sanciyuandehundan.h"
 
 void input(int* ru, int max, int min) {
     string input_str;
@@ -22,13 +25,14 @@ void input(int* ru, int max, int min) {
 
 json* open_json(string s)
 {
-    ifstream file("default.json");
+    ifstream file(s);
     if (!file.is_open()) {
         cerr << "Failed to open the file." << endl;
-        return;
+        return nullptr;
     }
-    json j;
-    file >> j;
+    json* j = new json();
+    file >> *j;
     file.close();
-    return &j;
+    //cout << (*j)["path"];
+    return j;
 }

@@ -1,18 +1,7 @@
 #pragma once
-#define  _CRT_SECURE_NO_WARNINGS
-#include <iostream>
-#include <ctime>
-#include <cstdlib>
-#include<stdio.h>
-#include<stdlib.h>
-#include<istream>
-#include <fstream>
-#include<string>
+#include "including.h"
 #include "xiahui.h"
 #include "chenpi.h"
-#include "json.hpp"
-using json = nlohmann::json;
-using namespace std;
 
 class Score {
 public:
@@ -54,7 +43,7 @@ public:
 	long double lisan;
 
 	bool add_game(Game* ga);
-	bool Import(string s);
+	bool Import(string filename);
 	void Show();
 	Score();
 };
