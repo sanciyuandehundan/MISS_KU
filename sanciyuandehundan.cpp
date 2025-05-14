@@ -58,13 +58,16 @@ void Menu_input(int* ru, Score* s)
 
 void Menu_import(int* ru, Score* s)
 {
+	string pa;
 	bool con = true;
 	while (con) {
 		Introduce_import(s);
 		input(ru, 2, 1);
 		switch (*ru)
 		{
-		case 1:cout << "未实现" << endl; system("pause"); break;
+		case 1:
+			cin >> pa;
+			s->Import(pa); break;
 		case 2:con = false; break;
 		default:
 			break;
@@ -102,7 +105,11 @@ void Menu_scoremaster(int* ru, Score* s)
 		switch (*ru)
 		{
 		case 1:s->set_master(); break;
-		case 2:cout << "未实现" << endl; system("pause"); break;
+		case 2:
+			s->Export();
+			s->Clear_all();
+			s->set_master();
+			break;
 		case 3:con = false; break;
 		default:
 			break;
@@ -110,7 +117,7 @@ void Menu_scoremaster(int* ru, Score* s)
 	}
 }
 
-bool Score::Import(string filename)
+bool Score::Import(string filename)//缺少同归属者分支
 {
 	json* j = open_json(filename);
 	master = new string((*j)["master"]);
@@ -181,8 +188,32 @@ bool Score::Export()
 	file << j.dump(4);
 	cout << j.dump(4);
 	system("pause");
+	//修改path————————————————————————————————————————————————————
 	file.close();
 	return false;
+}
+
+void Score::Clear_all()
+{
+	Game* anchor1=list_hand->get_last();
+	Game* anchor2=list_hand->get_last();
+	for (long long i = 0; i < game_num; i++) {
+		anchor2 = anchor1->prev;
+		anchor1->Clear_all_round();
+		delete anchor1;
+		anchor1 = anchor2;
+	}
+}
+
+void Score::Clear(int index)
+{
+	Game* anchor = list_hand->get_anchor(index);
+	if (anchor->prev != nullptr) {
+		anchor->prev->next = anchor->next;
+		if (anchor->next != nullptr)anchor->next->prev = anchor->prev;
+	}
+	anchor->Clear_all_round();
+	delete anchor;
 }
 
 bool Score::add_game(Game* ga)
@@ -210,7 +241,7 @@ void Score::Show()
 	cout << "总箭数:" << arrow_num_all<<endl;
 	cout << "离散系数(越小越好):" << lisan << endl;
 	//while (temp != nullptr) {
-
+		
 	//}
 }
 
@@ -241,6 +272,16 @@ bool Score::Round::add_arrow(Arrow* arr)
 	return true;
 }
 
+void Score::Round::Clear_arrow(int index)
+{
+
+}
+
+void Score::Round::Clear_all_arrow()
+{
+
+}
+
 bool Score::Game::add_round(Round* ro)
 {
 	if (round_num >= 23)return false;
@@ -265,6 +306,25 @@ bool Score::Game::add_next(Game* ga)
 	next = ga;
 	ga->prev = this;
 	return true;
+}
+
+void Score::Game::Clear_round(int index)
+{
+	Round* anchor = round[index];
+	for (int i = index; i < round_num - 1; i++) {
+		round[i] = round[i + 1];
+	}
+	round[round_num] = nullptr;
+	anchor->Clear_all_arrow();
+	delete anchor;
+}
+
+void Score::Game::Clear_all_round()
+{
+	for (int i = 0; i < round_num; i++) {
+		round[i]->Clear_all_arrow();
+		delete round[i];
+	}
 }
 
 Score::Arrow::Arrow(int r, int p)

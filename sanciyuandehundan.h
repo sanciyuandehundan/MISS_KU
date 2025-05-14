@@ -20,6 +20,8 @@ public:
 		Arrow* arrow[24];
 		Round(Target t, int d);
 		bool add_arrow(Arrow* arr);
+		void Clear_arrow(int index);
+		void Clear_all_arrow();
 	};
 	class Game {
 	public:
@@ -34,6 +36,8 @@ public:
 		Game* get_last();
 		Game* get_anchor(int num);
 		bool add_next(Game* ga);
+		void Clear_round(int index);
+		void Clear_all_round();
 	};
 	string* master;
 	Game* list_hand;
@@ -42,6 +46,8 @@ public:
 	long long arrow_num_all;
 	long double lisan;
 
+	void Clear_all();
+	void Clear(int index);
 	bool add_game(Game* ga);
 	bool Import(string filename);
 	bool Export();
