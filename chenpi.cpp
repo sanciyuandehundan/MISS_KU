@@ -2,6 +2,8 @@
 #include "xiahui.h"
 #include "chenpi.h"
 #include "sanciyuandehundan.h"
+#include <io.h>
+#include <fcntl.h>
 
 // 定义一些颜色和样式常量
 #define COLOR_TITLE "\033[1;36m"  // 青色加粗
@@ -9,10 +11,11 @@
 #define COLOR_OPTION "\033[1;32m" // 绿色加粗
 #define COLOR_RESET "\033[0m"     // 重置颜色
 
+
 void Top(const char* c) {
     cout << COLOR_TITLE;
     cout << "╔════════════════════════════╗" << endl;
-    cout << "║         " << c << "         ║" << endl;
+    cout << "║   " << c << "   ║" << endl;
     cout << "╚════════════════════════════╝" << endl;
     cout << COLOR_RESET;
 }
@@ -22,11 +25,11 @@ void Introduce_main(Score* s) {
     Top("射箭成绩统计与分析系统");
     cout << COLOR_MENU;
     cout << "┌────────────────────────────┐" << endl;
-    cout << "│ " << COLOR_OPTION << "1. 手动输入成绩" << COLOR_MENU << "           │" << endl;
-    cout << "│ " << COLOR_OPTION << "2. 导入成绩文件" << COLOR_MENU << "           │" << endl;
-    cout << "│ " << COLOR_OPTION << "3. 导出成绩文件" << COLOR_MENU << "           │" << endl;
-    cout << "│ " << COLOR_OPTION << "4. 查看过往成绩" << COLOR_MENU << "           │" << endl;
-    cout << "│ " << COLOR_OPTION << "5. 修改成绩归属" << COLOR_MENU << "           │" << endl;
+    cout << "│     " << COLOR_OPTION << "1. 手动输入成绩" << COLOR_MENU << "        │" << endl;
+    cout << "│     " << COLOR_OPTION << "2. 导入成绩文件" << COLOR_MENU << "        │" << endl;
+    cout << "│     " << COLOR_OPTION << "3. 导出成绩文件" << COLOR_MENU << "        │" << endl;
+    cout << "│     " << COLOR_OPTION << "4. 查看过往成绩" << COLOR_MENU << "        │" << endl;
+    cout << "│     " << COLOR_OPTION << "5. 修改成绩归属" << COLOR_MENU << "        │" << endl;
     cout << "└────────────────────────────┘" << endl;
     cout << COLOR_RESET;
     cout << COLOR_OPTION << "请选择操作 (1-5): " << COLOR_RESET;
