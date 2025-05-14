@@ -112,15 +112,15 @@ void rectangle_one_row(string s)
 {
     cout << COLOR_TITLE;
     size_t length = s.length();  // 返回字节数（取决于编码）
-    cout << "╔" << endl;
+    cout << "╔";
     for (int i = 0; i < length; i++) {
-        cout << "═" << endl;
+        cout << "═" ;
     }
     cout << "╗" << endl;
-    cout << "<< c << " << endl;
-    cout << "╚" << endl;
+    cout<<"║" << s << "║" << endl; 
+    cout << "╚" ;
     for (int i = 0; i < length; i++) {
-        cout << "═" << endl;
+        cout << "═" ;
     }
     cout << "╝" << endl;
 }
