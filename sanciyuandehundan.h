@@ -44,7 +44,9 @@ public:
 
 	bool add_game(Game* ga);
 	bool Import(string filename);
+	bool Export();
 	void Show();
+	void set_master();
 	Score();
 };
 void Menu_main(int *ru,Score* s);

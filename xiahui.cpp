@@ -27,7 +27,7 @@ json* open_json(string s)
 {
     ifstream file(s);
     if (!file.is_open()) {
-        cerr << "Failed to open the file." << endl;
+        cout << "打开文件失败" << endl;
         return nullptr;
     }
     json* j = new json();

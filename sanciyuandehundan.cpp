@@ -94,7 +94,7 @@ void Menu_scoremaster(int* ru, Score* s)
 		input(ru, 3, 1);
 		switch (*ru)
 		{
-		case 1:cout << "未实现" << endl; system("pause"); break;
+		case 1:s->set_master(); break;
 		case 2:cout << "未实现" << endl; system("pause"); break;
 		case 3:con = false; break;
 		default:
@@ -106,11 +106,11 @@ void Menu_scoremaster(int* ru, Score* s)
 bool Score::Import(string filename)
 {
 	json* j = open_json(filename);
-	this->master = new string((*j)["master"]);
-	this->game_num = (*j)["game_num"];
-	this->round_num_all = (*j)["round_num_all"];
-	this->arrow_num_all = (*j)["arrow_num_all"];
-	this->lisan = (*j)["lisan"];
+	master = new string((*j)["master"]);
+	game_num = (*j)["game_num"];
+	round_num_all = (*j)["round_num_all"];
+	arrow_num_all = (*j)["arrow_num_all"];
+	lisan = (*j)["lisan"];
 	for (json& game_json : (*j)["game"]) {
 		Game* game = new Game();
 		game->target = static_cast<Target>(game_json["target"]);
@@ -128,7 +128,35 @@ bool Score::Import(string filename)
 		}
 		this->add_game(game);
 	}
+	delete j;
 	return true;
+}
+
+bool Score::Export()
+{
+	ofstream file(*master + ".json");
+	if (!file.is_open()) {
+		cout << "打开文件失败" << endl;
+		return;
+	}
+	json j;
+	j["master"] = *master;
+	j["game_num"] = game_num;
+	j["round_num_all"] = round_num_all;
+	j["arrow_num_all"] = arrow_num_all;
+	j["lisan"] = lisan;
+
+	j["game"] = json::array();
+	j["round"] = json::array();
+	j["arrow"] = json::array();
+	Game* temp;
+	while (temp != nullptr) {
+		 
+	}
+
+	file << j;
+	file.close();
+	return false;
 }
 
 bool Score::add_game(Game* ga)
@@ -137,6 +165,7 @@ bool Score::add_game(Game* ga)
 		list_hand = ga;
 	}
 	list_hand->get_last()->add_next(ga);
+	game_num++;
 	return true;
 }
 
@@ -148,9 +177,16 @@ void Score::Show()
 	cout << "总组数:" << round_num_all<<endl;
 	cout << "总箭数:" << arrow_num_all<<endl;
 	cout << "离散系数(越小越好):" << lisan << endl;
-	for (long long i = 0; i < game_num; i++) {
-		
+	while (temp != nullptr) {
+
 	}
+}
+
+void Score::set_master()
+{
+	delete master;
+	cout << "请输入欲修改归属者的名字:";
+	cin >> *master;
 }
 
 Score::Score()
@@ -165,14 +201,20 @@ Score::Round::Round(Target t, int d, int a)
 	arrow_num = a;
 }
 
-bool Score::Round::add_arrow(Arrow* arr)//aaaaaa
+bool Score::Round::add_arrow(Arrow* arr)
 {
-	return false;
+	if (arrow_num >= 23)return false;
+	arrows[arrow_num] = arr;
+	arrow_num++;
+	return true;
 }
 
-bool Score::Game::add_round(Round* ro)//aaaaaa
+bool Score::Game::add_round(Round* ro)
 {
-	return false;
+	if (round_num >= 23)return false;
+	rounds[round_num] = ro;
+	round_num++;
+	return true;
 }
 
 Score::Game* Score::Game::get_last()
@@ -189,7 +231,7 @@ bool Score::Game::add_next(Game* ga)
 {
 	next = ga;
 	ga->prev = this;
-	return false;
+	return true;
 }
 
 Score::Arrow::Arrow(int r, int p)
