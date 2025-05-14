@@ -14,9 +14,9 @@
 
 void Top(const char* c) {
     cout << COLOR_TITLE;
-    cout << "╔════════════════════════════╗" << endl;
-    cout << "║   " << c << "   ║" << endl;
-    cout << "╚════════════════════════════╝" << endl;
+    cout << "════════════════════════════" << endl;
+    cout << "  " << c << "  " << endl;
+    cout << "════════════════════════════" << endl;
     cout << COLOR_RESET;
 }
 
@@ -40,12 +40,12 @@ void Introduce_input(Score* s) {
     Top("手动输入数据");
     cout << COLOR_MENU;
     cout << "┌────────────────────────────┐" << endl;
-    cout << "│ " << COLOR_OPTION << "1. 设定靶子类型" << COLOR_MENU << "           │" << endl;
-    cout << "│ " << COLOR_OPTION << "2. 设定距离" << COLOR_MENU << "               │" << endl;
-    cout << "│ " << COLOR_OPTION << "3. 设定轮数" << COLOR_MENU << "               │" << endl;
-    cout << "│ " << COLOR_OPTION << "4. 设定每轮箭数" << COLOR_MENU << "           │" << endl;
-    cout << "│ " << COLOR_OPTION << "5. 开始输入" << COLOR_MENU << "               │" << endl;
-    cout << "│ " << COLOR_OPTION << "6. 返回主菜单" << COLOR_MENU << "             │" << endl;
+    cout << "│  " << COLOR_OPTION << "1. 设定靶子类型" << COLOR_MENU << "           │" << endl;
+    cout << "│  " << COLOR_OPTION << "2. 设定距离" << COLOR_MENU << "               │" << endl;
+    cout << "│  " << COLOR_OPTION << "3. 设定轮数" << COLOR_MENU << "               │" << endl;
+    cout << "│  " << COLOR_OPTION << "4. 设定每轮箭数" << COLOR_MENU << "           │" << endl;
+    cout << "│  " << COLOR_OPTION << "5. 开始输入" << COLOR_MENU << "               │" << endl;
+    cout << "│  " << COLOR_OPTION << "6. 返回主菜单" << COLOR_MENU << "             │" << endl;
     cout << "└────────────────────────────┘" << endl;
     cout << COLOR_RESET;
     cout << COLOR_OPTION << "请选择操作 (1-6): " << COLOR_RESET;
