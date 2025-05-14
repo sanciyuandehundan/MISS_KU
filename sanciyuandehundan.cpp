@@ -3,6 +3,13 @@
 #include "chenpi.h"
 #include "sanciyuandehundan.h"
 
+void to_json(nlohmann::json& j, const Score::Target& t) {
+	j = static_cast<int>(t); // 转成整数写入
+}
+void from_json(const nlohmann::json& j, Score::Target& t) {
+	t = static_cast<Score::Target>(j.get<int>());
+}
+
 void Menu_main(int* ru, Score* s)
 {
 	while (1) {
@@ -73,7 +80,7 @@ void Menu_export(int* ru, Score* s)
 		input(ru, 2, 1);
 		switch (*ru)
 		{
-		case 1:cout << "未实现" << endl; system("pause"); break;
+		case 1:s->Export(); break;
 		case 2:con = false; break;
 		default:
 			break;
@@ -113,13 +120,13 @@ bool Score::Import(string filename)
 	lisan = (*j)["lisan"];
 	for (json& game_json : (*j)["game"]) {
 		Game* game = new Game();
-		game->target = static_cast<Target>(game_json["target"]);
+		game->target = game_json["target"];
 		game->distance = game_json["distance"];
 		game->round_num = game_json["round_num"];
 		game->arrow_num = game_json["arrow_num"];
 
 		for (json& round_json : game_json["round"]) {
-			Round* round = new Round(static_cast<Target>(round_json["target"]), round_json["distance"], round_json["arrow_num"]);
+			Round* round = new Round(round_json["target"], round_json["distance"], round_json["arrow_num"]);
 
 			for (json& arrow_json : round_json["arrow"]) {
 				round->add_arrow(new Arrow(arrow_json["ring"], arrow_json["position"]));
@@ -137,7 +144,7 @@ bool Score::Export()
 	ofstream file(*master + ".json");
 	if (!file.is_open()) {
 		cout << "打开文件失败" << endl;
-		return;
+		return false;
 	}
 	json j;
 	j["master"] = *master;
@@ -145,16 +152,36 @@ bool Score::Export()
 	j["round_num_all"] = round_num_all;
 	j["arrow_num_all"] = arrow_num_all;
 	j["lisan"] = lisan;
-
 	j["game"] = json::array();
-	j["round"] = json::array();
-	j["arrow"] = json::array();
-	Game* temp;
-	while (temp != nullptr) {
-		 
-	}
 
+	Game* temp = list_hand;
+	while (temp != nullptr) {
+		json j_g;
+		j_g["target"] = temp->target;
+		j_g["distance"] = temp->distance;
+		j_g["round_num"] = temp->round_num;
+		j_g["arrow_num"] = temp->arrow_num;
+		j_g["round"] = json::array();
+		for (int i = 0; i < temp->round_num; ++i) {
+			Round* r = temp->round[i];
+			json j_r;
+			j_r["target"] = r->target;
+			j_r["distance"] = r->distance;
+			j_r["arrow_num"] = r->arrow_num;
+			j_r["arrow"] = json::array();
+			for (int k = 0; k < r->arrow_num; ++k) {
+				Arrow* a = r->arrow[k];
+				json j_a;
+				j_a["ring"] = a->ring;
+				j_a["position"] = a->position;
+				j_r["round"].push_back(j_a);
+			}
+			j_g["round"].push_back(j_r);
+		}
+		j["game"].push_back(j_g);
+	}
 	file << j;
+	cout << j;
 	file.close();
 	return false;
 }
@@ -177,9 +204,9 @@ void Score::Show()
 	cout << "总组数:" << round_num_all<<endl;
 	cout << "总箭数:" << arrow_num_all<<endl;
 	cout << "离散系数(越小越好):" << lisan << endl;
-	while (temp != nullptr) {
+	//while (temp != nullptr) {
 
-	}
+	//}
 }
 
 void Score::set_master()
@@ -204,7 +231,7 @@ Score::Round::Round(Target t, int d, int a)
 bool Score::Round::add_arrow(Arrow* arr)
 {
 	if (arrow_num >= 23)return false;
-	arrows[arrow_num] = arr;
+	arrow[arrow_num] = arr;
 	arrow_num++;
 	return true;
 }
@@ -212,7 +239,7 @@ bool Score::Round::add_arrow(Arrow* arr)
 bool Score::Game::add_round(Round* ro)
 {
 	if (round_num >= 23)return false;
-	rounds[round_num] = ro;
+	round[round_num] = ro;
 	round_num++;
 	return true;
 }
