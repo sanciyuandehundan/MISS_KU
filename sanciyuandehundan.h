@@ -17,8 +17,8 @@ public:
 		Target target;
 		int distance;
 		int arrow_num;
-		Arrow* arrows[24];
-		Round(Target t, int d, int a);
+		Arrow* arrow[24];
+		Round(Target t, int d);
 		bool add_arrow(Arrow* arr);
 	};
 	class Game {
@@ -29,7 +29,7 @@ public:
 		int distance;
 		int round_num;
 		int arrow_num;
-		Round* rounds[24];
+		Round* round[24];
 		bool add_round(Round* ro);
 		Game* get_last();
 		Game* get_anchor(int num);
@@ -44,7 +44,9 @@ public:
 
 	bool add_game(Game* ga);
 	bool Import(string filename);
+	bool Export();
 	void Show();
+	void set_master();
 	Score();
 };
 void Menu_main(int *ru,Score* s);
