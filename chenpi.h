@@ -31,3 +31,7 @@ void Introduce_view(Score* s);
 修改成绩归属者介绍,输入范围3~1
 */
 void Introduce_scoremaster(Score* s);
+/*
+自适应方框
+*/
+void rectangle_one_row(string s);
