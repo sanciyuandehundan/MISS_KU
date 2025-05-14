@@ -11,3 +11,8 @@ void input(int* ru, int max, int min);
 从文件路径打开json文件并回传json类内容
 */
 json* open_json(string s);
+
+/*
+打开default.json文件，修改path
+*/
+void default_json(string s);

@@ -46,3 +46,8 @@ json* open_json(string s)
     //cout << (*j)["path"];
     return j;
 }
+
+void default_json(string s)
+{
+
+}
