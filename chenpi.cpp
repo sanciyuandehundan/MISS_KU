@@ -64,8 +64,8 @@ void Introduce_import(Score* s) {
     cout << "────────────────────────────────" << endl;
     s->Show();
     cout << "┌────────────────────────────┐" << endl;
-    cout << "│ " << COLOR_OPTION << "1. 开始导入" << COLOR_MENU << "               │" << endl;
-    cout << "│ " << COLOR_OPTION << "2. 返回主菜单" << COLOR_MENU << "             │" << endl;
+    cout << "│   " << COLOR_OPTION << "1. 开始导入" << COLOR_MENU << "              │" << endl;
+    cout << "│   " << COLOR_OPTION << "2. 返回主菜单" << COLOR_MENU << "            │" << endl;
     cout << "└────────────────────────────┘" << endl;
     cout << COLOR_RESET;
     cout << COLOR_OPTION << "请选择操作 (1-2): " << COLOR_RESET;
@@ -77,8 +77,8 @@ void Introduce_export(Score* s) {
     s->Show();
     cout << COLOR_MENU;
     cout << "┌────────────────────────────┐" << endl;
-    cout << "│ " << COLOR_OPTION << "1. 开始导出" << COLOR_MENU << "               │" << endl;
-    cout << "│ " << COLOR_OPTION << "2. 返回主菜单" << COLOR_MENU << "             │" << endl;
+    cout << "│      " << COLOR_OPTION << "1. 开始导出" << COLOR_MENU << "           │" << endl;
+    cout << "│      " << COLOR_OPTION << "2. 返回主菜单" << COLOR_MENU << "         │" << endl;
     cout << "└────────────────────────────┘" << endl;
     cout << COLOR_RESET;
     cout << COLOR_OPTION << "请选择操作 (1-2): " << COLOR_RESET;
@@ -99,11 +99,28 @@ void Introduce_scoremaster(Score* s) {
     Top("修改成绩归属");
     cout << COLOR_MENU;
     cout << "┌────────────────────────────┐" << endl;
-    cout << "│ " << COLOR_OPTION << "1. 修改该份成绩的归属者" << COLOR_MENU << "   │" << endl;
-    cout << "│ " << COLOR_OPTION << "2. 开始记录另一个人的成绩" << COLOR_MENU << " │" << endl;
-    cout << "│ " << COLOR_OPTION << "   (当前成绩将被自动导出)" << COLOR_MENU << " │" << endl;
-    cout << "│ " << COLOR_OPTION << "3. 返回主菜单" << COLOR_MENU << "             │" << endl;
+    cout << "│ " << COLOR_OPTION << "1. 修改该份成绩的归属者" << COLOR_MENU << "    │" << endl;
+    cout << "│ " << COLOR_OPTION << "2. 开始记录另一个人的成绩" << COLOR_MENU << "  │" << endl;
+    cout << "│ " << COLOR_OPTION << "   (当前成绩将被自动导出)" << COLOR_MENU << "  │" << endl;
+    cout << "│ " << COLOR_OPTION << "3. 返回主菜单" << COLOR_MENU << "              │" << endl;
     cout << "└────────────────────────────┘" << endl;
     cout << COLOR_RESET;
     cout << COLOR_OPTION << "请选择操作 (1-3): " << COLOR_RESET;
+}
+
+void rectangle_one_row(string s)
+{
+    cout << COLOR_TITLE;
+    size_t length = s.length();  // 返回字节数（取决于编码）
+    cout << "╔" << endl;
+    for (int i = 0; i < length; i++) {
+        cout << "═" << endl;
+    }
+    cout << "╗" << endl;
+    cout << "<< c << " << endl;
+    cout << "╚" << endl;
+    for (int i = 0; i < length; i++) {
+        cout << "═" << endl;
+    }
+    cout << "╝" << endl;
 }
