@@ -18,7 +18,7 @@ public:
 		int distance;
 		int arrow_num;
 		Arrow* arrow[24];
-		Round(Target t, int d, int a);
+		Round(Target t, int d);
 		bool add_arrow(Arrow* arr);
 	};
 	class Game {

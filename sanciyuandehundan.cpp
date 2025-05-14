@@ -122,11 +122,11 @@ bool Score::Import(string filename)
 		Game* game = new Game();
 		game->target = game_json["target"];
 		game->distance = game_json["distance"];
-		game->round_num = game_json["round_num"];
-		game->arrow_num = game_json["arrow_num"];
+		//game->round_num = game_json["round_num"];
+		//game->arrow_num = game_json["arrow_num"];
 
 		for (json& round_json : game_json["round"]) {
-			Round* round = new Round(round_json["target"], round_json["distance"], round_json["arrow_num"]);
+			Round* round = new Round(round_json["target"], round_json["distance"]);
 
 			for (json& arrow_json : round_json["arrow"]) {
 				round->add_arrow(new Arrow(arrow_json["ring"], arrow_json["position"]));
@@ -174,14 +174,16 @@ bool Score::Export()
 				json j_a;
 				j_a["ring"] = a->ring;
 				j_a["position"] = a->position;
-				j_r["round"].push_back(j_a);
+				j_r["arrow"].push_back(j_a);
 			}
 			j_g["round"].push_back(j_r);
 		}
 		j["game"].push_back(j_g);
+		temp = temp->next;
 	}
-	file << j;
-	cout << j;
+	file << j.dump(4);
+	cout << j.dump(4);
+	system("pause");
 	file.close();
 	return false;
 }
@@ -190,6 +192,8 @@ bool Score::add_game(Game* ga)
 {
 	if (list_hand == nullptr) {
 		list_hand = ga;
+		game_num++;
+		return false;
 	}
 	list_hand->get_last()->add_next(ga);
 	game_num++;
@@ -221,11 +225,11 @@ Score::Score()
 	Import((*open_json("default.json"))["path"]);
 }
 
-Score::Round::Round(Target t, int d, int a)
+Score::Round::Round(Target t, int d)
 {
 	target = t;
 	distance = d;
-	arrow_num = a;
+	arrow_num = 0;
 }
 
 bool Score::Round::add_arrow(Arrow* arr)
