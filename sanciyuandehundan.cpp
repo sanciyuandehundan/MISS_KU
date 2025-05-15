@@ -136,16 +136,15 @@ bool Score::Import(string filename)//缺少同归属者分支
 			Game* game = new Game(game_json["time"]);
 			game->target = game_json["target"];
 			game->distance = game_json["distance"];
+			this->add_game(game);
 
 			for (json& round_json : game_json["round"]) {
 				Round* round = new Round(round_json["target"], round_json["distance"]);
-
+				game->add_round(round);
 				for (json& arrow_json : round_json["arrow"]) {
 					round->add_arrow(new Arrow(arrow_json["ring"], arrow_json["position"]));
 				}
-				game->add_round(round);
 			}
-			this->add_game(game);
 		}
 		delete j;
 		return true;
