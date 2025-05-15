@@ -6,14 +6,18 @@
 class Score {
 public:
 	enum Target { hou = 1, huan_40_full = 2, huan_60_full = 3, huan_80_full = 4, huan_122_full = 5, huan_40_self = 6, huan_60_self = 7, huan_80_self = 8 };
+	class Round;
+	class Game;
 	class Arrow {
 	public:
+		Round* parent;
 		int ring;
 		int position;
 		Arrow(int r, int p);
 	};
 	class Round {
 	public:
+		Game* parent;
 		Target target;
 		int distance;
 		int arrow_num;
@@ -25,6 +29,8 @@ public:
 	};
 	class Game {
 	public:
+		Score* parent;
+		time_t gametime;
 		Game* next;
 		Game* prev;
 		Target target;
@@ -38,6 +44,7 @@ public:
 		bool add_next(Game* ga);
 		void Clear_round(int index);
 		void Clear_all_round();
+		Game(time_t time);
 	};
 	string* master;
 	Game* list_hand;

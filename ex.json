@@ -6,6 +6,7 @@
   "lisan": 3,
   "game": [
     {
+      "time": 1000000,
       "target": 2,
       "distance": 40,
       "round_num": 1,

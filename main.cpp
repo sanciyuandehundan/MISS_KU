@@ -7,7 +7,6 @@ Score *score;
 int ru;
 int main()
 {
-	rectangle_one_row("hkghgfdfghuijokjhgfgxf                  _____123234354657678");
-	//score = new Score();
-	//Menu_main(&ru, score);
+	score = new Score();
+	Menu_main(&ru, score);
 }
