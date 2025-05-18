@@ -169,8 +169,7 @@ bool Score::Export()
 	j["lisan"] = lisan;
 	j["game"] = json::array();
 
-	Game* temp = list_hand;
-	while (temp != nullptr) {
+	for(Game* temp:game) {
 		json j_g;
 		j_g["target"] = temp->target;
 		j_g["time"] = temp->gametime;
@@ -195,70 +194,50 @@ bool Score::Export()
 			j_g["round"].push_back(j_r);
 		}
 		j["game"].push_back(j_g);
-		temp = temp->next;
 	}
 	file << j.dump(4);
 	cout << j.dump(4);
 	system("pause");
 	default_json(*master + ".json");
 	file.close();
-	return false;
+	return true;
 }
 
 void Score::Clear_all()
 {
-	Game* anchor1 = list_hand->get_last();
-	Game* anchor2 = list_hand->get_last();
-	for (long long i = 0; i < game_num; i++) {
-		anchor2 = anchor1->prev;
-		anchor1->Clear_all_round();
-		delete anchor1;
-		anchor1 = anchor2;
+	for (Game* g : game) {
+		g->Clear_all_round();
+		delete g;
 	}
 	game_num = 0;
 }
 
 void Score::Clear(int index)
 {
-	Game* anchor = list_hand->get_anchor(index);
-	if (anchor->prev != nullptr) {
-		anchor->prev->next = anchor->next;
-		if (anchor->next != nullptr)anchor->next->prev = anchor->prev;
+	Game* g = game[index];
+	for (int i = index; i < game_num - 1; i++) {
+		game[i] = game[i + 1];
 	}
-	anchor->Clear_all_round();
-	delete anchor;
+	game[game_num] = nullptr;
+	g->Clear_all_round();
+	delete g;
 	game_num--;
 }
 
-bool Score::add_game(Game* ga)
+void Score::add_game(Game* ga)
 {
-	if (list_hand == nullptr) {
-		list_hand = ga;
-		ga->parent = this;
-		round_num_all = list_hand->round_num;
-		arrow_num_all = list_hand->arrow_num;
-		game_num++;
-		return false;
-	}
-	list_hand->get_last()->add_next(ga);
 	ga->parent = this;
-	round_num_all += ga->round_num;
-	arrow_num_all += ga->arrow_num;
+	game.push_back(ga);
 	game_num++;
-	return true;
 }
 
 void Score::Show()
 {
-	Game* temp = list_hand;
 	cout << "成绩归属者:" << master->c_str() << endl;
 	cout << "总轮数:" << game_num << endl;
 	cout << "总组数:" << round_num_all << endl;
 	cout << "总箭数:" << arrow_num_all << endl;
 	cout << "离散系数(越小越好):" << lisan << endl;
-	//while (temp != nullptr) {
-
-	//}
 }
 
 void Score::set_master()
@@ -321,23 +300,6 @@ bool Score::Game::add_round(Round* ro)
 	round_num++;
 	parent->round_num_all++;
 	arrow_num += ro->arrow_num;
-	return true;
-}
-
-Score::Game* Score::Game::get_last()
-{
-	return this->next == nullptr ? this : this->next->get_last();
-}
-
-Score::Game* Score::Game::get_anchor(int num)
-{
-	return num ? next->get_anchor(num - 1) : this;
-}
-
-bool Score::Game::add_next(Game* ga)
-{
-	next = ga;
-	ga->prev = this;
 	return true;
 }
 
