@@ -1,28 +1,30 @@
 {
-  "master": "sa",
-  "game_num": 1,
-  "round_num_all": 1,
-  "arrow_num_all": 1,
-  "lisan": 3,
-  "game": [
-    {
-      "target": 2,
-      "distance": 40,
-      "round_num": 1,
-      "arrow_num": 1,
-      "round": [
+    "game": [
         {
-          "target": 2,
-          "distance": 40,
-          "arrow_num": 1,
-          "arrow": [
-            {
-              "ring": 11,
-              "position": 12
-            }
-          ]
+            "distance": 40,
+            "round": [
+                {
+                    "arrow": [
+                        {
+                            "position": 12,
+                            "ring": 11
+                        },
+                        {
+                            "position": 12,
+                            "ring": 11
+                        },
+                        {
+                            "position": 12,
+                            "ring": 11
+                        }
+                    ],
+                    "distance": 40,
+                    "target": 2
+                }
+            ],
+            "target": 2,
+            "time": 1000000
         }
-      ]
-    }
-  ]
+    ],
+    "master": "ex"
 }
