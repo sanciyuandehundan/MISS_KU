@@ -38,4 +38,4 @@ void rectangle_one_row(string s);
 /*
 自适应方框,多行
 */
-void rectangle_many_row(string s);
+void output(string s);

@@ -125,7 +125,7 @@ void rectangle_one_row(string s)
     cout << "¨a" << endl;
 }
 
-void rectangle_many_row(string s)
+void output(string s)
 {
 
 }
