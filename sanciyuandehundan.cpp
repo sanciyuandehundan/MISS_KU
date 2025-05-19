@@ -75,7 +75,8 @@ void Menu_import(int* ru, Log* s)
 		switch (*ru)
 		{
 		case 1:
-			cout << "请输入路径:";
+			cout << COLOR_RESET;
+			cout << COLOR_OPTION << "请输入路径: " << COLOR_RESET;
 			cin >> pa;
 			s->Import(pa); break;
 		case 2:con = false; break;
@@ -151,7 +152,7 @@ void Menu_delete(int* ru, Log* s)
 
 bool Log::Import(string filename)
 {
-	json* j = open_json("ex.json");
+	json* j = open_json(filename);
 	if ((this->master == nullptr) || !(master->_Equal((*j)["master"]))) {
 		master = new string((*j)["master"]);
 	}
@@ -221,8 +222,6 @@ bool Log::Export()
 void Log::Clear_all()
 {
 	for (Game* g : game) {
-		round_num_all -= g->round_num;
-		arrow_num_all -= g->arrow_num;
 		g->Clear_all_round();
 		delete g;
 	}
@@ -236,8 +235,6 @@ void Log::Clear(int index)
 	for (int i = index; i < game_num - 1; i++) {
 		game[i] = game[i + 1];
 	}
-	round_num_all -= g->round_num;
-	arrow_num_all -= g->arrow_num;
 	game[game_num] = nullptr;
 	g->Clear_all_round();
 	delete g;
@@ -267,11 +264,13 @@ void Log::Show()
 		o += format("{:<14d}", i++) + format("{:<30s}", t.substr(0, t.find_last_not_of("\r\n") + 1)) + format("{:<11.4f}", lisan) + format("{:0>3d}/{:<9d}", g->Score(), g->Score_full()) + format("{:<12s}", TargetToString(g->target)) + format("{:<d}米", g->distance) + "\n";
 	}
 	output(o);
+	rectangle_one_row(o);
 }
 
 void Log::set_master()
 {
-	cout << "请输入欲修改归属者的名字:";
+	cout << COLOR_RESET;
+	cout << COLOR_OPTION << "请输入欲修改归属者的名字: " << COLOR_RESET;
 	cin >> *master;
 }
 

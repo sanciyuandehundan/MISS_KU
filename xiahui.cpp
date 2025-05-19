@@ -24,14 +24,19 @@ void input(int* ru, int max, int min) {
                     valid = true;
                 }
                 else {
-                    cout << "请输入" << min << '~' << max << ":";
+                    cout << COLOR_RESET;
+                    cout << COLOR_OPTION << "请输入 (" << min << '~' << max << "): " << COLOR_RESET;
                 }
             }
             catch (...) {
-                cout << "请输入" << min << '~' << max << ":";
+                cout << COLOR_RESET;
+                cout << COLOR_OPTION << "请输入 (" << min << '~' << max << "): " << COLOR_RESET;
             }
         }
-        else cout << "请输入" << min << '~' << max << ":";
+        else {
+            cout << COLOR_RESET;
+            cout << COLOR_OPTION << "请输入 (" << min << '~' << max << "): " << COLOR_RESET;
+        }
     } while (!valid);
 }
 
@@ -51,12 +56,13 @@ json* open_json(string s)
 
 void default_json(string s)
 {
-    ofstream file(s);
+    json* j = open_json("default.json");
+    ofstream file("default.json");
     if (!file.is_open()) {
         cout << "打开文件失败" << endl;
         return;
     }
-    json* j = open_json("default.json");
     (*j)["path"] = s;
     file << *j;
+    file.close();
 }
