@@ -72,7 +72,7 @@ void Menu_import(int* ru, Log* s)
 		switch (*ru)
 		{
 		case 1:
-			output("请输入路径:");
+			cout << "请输入路径:";
 			cin >> pa;
 			s->Import(pa); break;
 		case 2:con = false; break;
@@ -101,6 +101,7 @@ void Menu_export(int* ru, Log* s)
 void Menu_view(int* ru, Log* s)
 {
 	Introduce_view(s);
+	s->Show();
 }
 
 void Menu_scoremaster(int* ru, Log* s)
@@ -124,34 +125,32 @@ void Menu_scoremaster(int* ru, Log* s)
 	}
 }
 
-bool Log::Import(string filename)//缺少同归属者分支
+bool Log::Import(string filename)
 {
-	json* j = open_json(filename);
+	json* j = open_json("ex.json");
 	if ((this->master == nullptr) || !(master->_Equal((*j)["master"]))) {
 		master = new string((*j)["master"]);
-		round_num_all = (*j)["round_num_all"];
-		arrow_num_all = (*j)["arrow_num_all"];
-		lisan = (*j)["lisan"];
-		for (json& game_json : (*j)["game"]) {
-			Game* game = new Game(game_json["time"]);
-			game->target = game_json["target"];
-			game->distance = game_json["distance"];
-			this->add_game(game);
+	}
+	for (json& game_json : (*j)["game"]) {
+		Game* game = new Game(game_json["time"]);
+		if (Check_same(game)) {
+			delete game;
+			continue;
+		}
+		game->target = game_json["target"];
+		game->distance = game_json["distance"];
+		this->add_game(game);
 
-			for (json& round_json : game_json["round"]) {
-				Round* round = new Round(round_json["target"], round_json["distance"]);
-				game->add_round(round);
-				for (json& arrow_json : round_json["arrow"]) {
-					round->add_arrow(new Arrow(arrow_json["ring"], arrow_json["position"]));
-				}
+		for (json& round_json : game_json["round"]) {
+			Round* round = new Round(round_json["target"], round_json["distance"]);
+			game->add_round(round);
+			for (json& arrow_json : round_json["arrow"]) {
+				round->add_arrow(new Arrow(arrow_json["ring"], arrow_json["position"]));
 			}
 		}
-		delete j;
-		return true;
 	}
-	else {//////////////////////////////////////////
-
-	}
+	delete j;
+	return true;
 }
 
 bool Log::Export()
@@ -163,10 +162,6 @@ bool Log::Export()
 	}
 	json j;
 	j["master"] = *master;
-	j["game_num"] = game_num;
-	j["round_num_all"] = round_num_all;
-	j["arrow_num_all"] = arrow_num_all;
-	j["lisan"] = lisan;
 	j["game"] = json::array();
 
 	for(Game* temp:game) {
@@ -174,15 +169,12 @@ bool Log::Export()
 		j_g["target"] = temp->target;
 		j_g["time"] = temp->gametime;
 		j_g["distance"] = temp->distance;
-		j_g["round_num"] = temp->round_num;
-		j_g["arrow_num"] = temp->arrow_num;
 		j_g["round"] = json::array();
 		for (int i = 0; i < temp->round_num; ++i) {
 			Round* r = temp->round[i];
 			json j_r;
 			j_r["target"] = r->target;
 			j_r["distance"] = r->distance;
-			j_r["arrow_num"] = r->arrow_num;
 			j_r["arrow"] = json::array();
 			for (int k = 0; k < r->arrow_num; ++k) {
 				Arrow* a = r->arrow[k];
@@ -211,6 +203,7 @@ void Log::Clear_all()
 		delete g;
 	}
 	game_num = 0;
+	game.resize(0);
 }
 
 void Log::Clear(int index)
@@ -225,6 +218,7 @@ void Log::Clear(int index)
 	g->Clear_all_round();
 	delete g;
 	game_num--;
+	game.resize(game.size() - 1);
 }
 
 void Log::add_game(Game* ga)
@@ -236,11 +230,11 @@ void Log::add_game(Game* ga)
 
 void Log::Show()
 {
-	output("成绩归属者:" + *master);
-	output("总轮数:" + game_num);
-	output("总组数:" + round_num_all);
-	output("总箭数:" + arrow_num_all);
-	output("离散系数(越小越好):" + to_string(lisan));
+	rectangle_one_row("成绩归属者:" + *master);
+	rectangle_one_row("总轮数:" + to_string(game_num));
+	rectangle_one_row("总组数:" + to_string(round_num_all));
+	rectangle_one_row("总箭数:" + to_string(arrow_num_all));
+	rectangle_one_row("离散值(越小越好):" + to_string(lisan));
 	string o = "编号          时间                          离散值     总成绩       靶子类型    距离\n";
 	string t;
 	int i = 0;
@@ -248,7 +242,7 @@ void Log::Show()
 		t = ctime(&(g->gametime));
 		o += format("{:<14d}", i++) + format("{:<30s}", t.substr(0, t.find_last_not_of("\r\n") + 1)) + format("{:<11.4f}", lisan) + format("{:0>3d}/{:<9d}", g->Score(), g->Score_full()) + format("{:<12s}", TargetToString(g->target)) + format("{:<d}米", g->distance) + "\n";
 	}
-	output(o);
+	rectangle_one_row(o);
 }
 
 void Log::set_master()
@@ -368,6 +362,14 @@ Log::Arrow::Arrow(int r, int p)
 	parent = nullptr;
 	ring = r;
 	position = p;
+}
+
+bool Log::Check_same(Game* g)
+{
+	for (Game* ga : game) {
+		if (ga->gametime == g->gametime)return true;
+	}
+	return false;
 }
 
 const char* Log::TargetToString(Target ta)

@@ -78,10 +78,14 @@ public:
 	};
 	string* master;
 	vector<Game*> game;
-	long long game_num;
-	long long round_num_all;
-	long long arrow_num_all;
+	int game_num;
+	int round_num_all;
+	int arrow_num_all;
 	long double lisan;
+	/*
+	检查是否有相同时间的比赛
+	*/
+	bool Check_same(Game* g);
 	/*
 	将靶子类型列举转换为字符串
 	*/
