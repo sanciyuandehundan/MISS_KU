@@ -51,6 +51,13 @@ public:
 		int round_num;
 		int arrow_num;
 		Round* round[24];
+		/*
+		计算满分
+		*/
+		int Score_full();
+		/*
+		计算总分
+		*/
 		int Score();
 		/*
 		往一场比赛添加轮次,加入成功返回true,失败则为false
@@ -75,7 +82,10 @@ public:
 	long long round_num_all;
 	long long arrow_num_all;
 	long double lisan;
-	
+	/*
+	将靶子类型列举转换为字符串
+	*/
+	static const char* TargetToString(Target ta);
 	/*
 	清空指定序号的比赛,包含清除内存和数量记录变量修改
 	*/

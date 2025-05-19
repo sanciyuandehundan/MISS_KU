@@ -234,23 +234,21 @@ void Log::add_game(Game* ga)
 	game_num++;
 }
 
-void Log::Show()/////////////////////////////////////
+void Log::Show()
 {
 	output("成绩归属者:" + *master);
 	output("总轮数:" + game_num);
 	output("总组数:" + round_num_all);
 	output("总箭数:" + arrow_num_all);
 	output("离散系数(越小越好):" + to_string(lisan));
-	string o = "编号          时间                          离散值    总成绩    靶子类型    距离\n";
+	string o = "编号          时间                          离散值     总成绩       靶子类型    距离\n";
 	string t;
-	size_t last_non_newline;
-	int i = 999;
+	int i = 0;
 	for (Game* g : game) {
 		t = ctime(&(g->gametime));
-		last_non_newline = t.find_last_not_of("\r\n");
-		o += format("{:<14d}", i++) + format("{:<30s}", t.substr(0, last_non_newline + 1)) + format("{:<10f}",lisan);
+		o += format("{:<14d}", i++) + format("{:<30s}", t.substr(0, t.find_last_not_of("\r\n") + 1)) + format("{:<11.4f}", lisan) + format("{:0>3d}/{:<9d}", g->Score(), g->Score_full()) + format("{:<12s}", TargetToString(g->target)) + format("{:<d}米", g->distance) + "\n";
 	}
-	rectangle_one_row(o);
+	output(o);
 }
 
 void Log::set_master()
@@ -305,15 +303,21 @@ void Log::Round::Clear_all_arrow()
 	arrow_num = 0;
 }
 
+int Log::Game::Score_full()
+{
+	return round_num * arrow_num * (target == 1 ? 5 : 10);
+}
+
 int Log::Game::Score()
 {
-	int re=0;
-	for (Round* r : round) {
-		for (Arrow* a : r->arrow) {
-			re += a->ring;
+	int re = 0, i, j;
+	for (i = 0; i < round_num; i++) {
+		for (j = 0; j < arrow_num; j++) {
+			re += round[i]->arrow[j]->ring;
+			if (round[i]->arrow[j]->ring == 11)re--;
 		}
 	}
-	return 0;
+	return re;
 }
 
 bool Log::Game::add_round(Round* ro)
@@ -352,6 +356,7 @@ void Log::Game::Clear_all_round()
 
 Log::Game::Game(time_t time)
 {
+	parent = nullptr;
 	gametime = time;
 	distance = 0;
 	round_num = 0;
@@ -360,6 +365,40 @@ Log::Game::Game(time_t time)
 
 Log::Arrow::Arrow(int r, int p)
 {
+	parent = nullptr;
 	ring = r;
 	position = p;
+}
+
+const char* Log::TargetToString(Target ta)
+{
+	switch (ta)
+	{
+	case Log::hou:
+		return "侯靶";
+		break;
+	case Log::huan_40_full:
+		return "40全环靶";
+		break;
+	case Log::huan_60_full:
+		return "60全环靶";
+		break;
+	case Log::huan_80_full:
+		return "80全环靶";
+		break;
+	case Log::huan_122_full:
+		return "122全环靶";
+		break;
+	case Log::huan_40_self:
+		return "40半环靶";
+		break;
+	case Log::huan_60_self:
+		return "60半环靶";
+		break;
+	case Log::huan_80_self:
+		return "80半环靶";
+		break;
+	default:
+		break;
+	}
 }
