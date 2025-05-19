@@ -147,3 +147,7 @@ void Menu_view(int* ru, Log* s);
 归属者菜单,输入空间指针,成绩实例指针
 */
 void Menu_scoremaster(int* ru, Log* s);
+/*
+删除成绩菜单,输入空间指针,成绩实例指针
+*/
+void Menu_delete(int* ru, Log* s);

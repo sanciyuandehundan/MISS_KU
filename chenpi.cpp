@@ -5,13 +5,6 @@
 #include <io.h>
 #include <fcntl.h>
 
-// 定义一些颜色和样式常量
-#define COLOR_TITLE "\033[1;36m"  // 青色加粗
-#define COLOR_MENU "\033[1;33m"  // 黄色加粗
-#define COLOR_OPTION "\033[1;32m" // 绿色加粗
-#define COLOR_RESET "\033[0m"     // 重置颜色
-
-
 void Top(const char* c) {
     cout << COLOR_TITLE;
     cout << "════════════════════════════" << endl;
@@ -30,9 +23,8 @@ void Introduce_main(Log* s) {
     cout << "│     " << COLOR_OPTION << "3. 导出成绩文件" << COLOR_MENU << "        │" << endl;
     cout << "│     " << COLOR_OPTION << "4. 查看过往成绩" << COLOR_MENU << "        │" << endl;
     cout << "│     " << COLOR_OPTION << "5. 修改成绩归属" << COLOR_MENU << "        │" << endl;
+    cout << "│     " << COLOR_OPTION << "6. 删除过往成绩" << COLOR_MENU << "        │" << endl;
     cout << "└────────────────────────────┘" << endl;
-    cout << COLOR_RESET;
-    cout << COLOR_OPTION << "请选择操作 (1-5): " << COLOR_RESET;
 }
 
 void Introduce_input(Log* s) {
@@ -47,8 +39,6 @@ void Introduce_input(Log* s) {
     cout << "│  " << COLOR_OPTION << "5. 开始输入" << COLOR_MENU << "               │" << endl;
     cout << "│  " << COLOR_OPTION << "6. 返回主菜单" << COLOR_MENU << "             │" << endl;
     cout << "└────────────────────────────┘" << endl;
-    cout << COLOR_RESET;
-    cout << COLOR_OPTION << "请选择操作 (1-6): " << COLOR_RESET;
 }
 
 void Introduce_import(Log* s) {
@@ -67,8 +57,6 @@ void Introduce_import(Log* s) {
     cout << "│   " << COLOR_OPTION << "1. 开始导入" << COLOR_MENU << "              │" << endl;
     cout << "│   " << COLOR_OPTION << "2. 返回主菜单" << COLOR_MENU << "            │" << endl;
     cout << "└────────────────────────────┘" << endl;
-    cout << COLOR_RESET;
-    cout << COLOR_OPTION << "请选择操作 (1-2): " << COLOR_RESET;
 }
 
 void Introduce_export(Log* s) {
@@ -80,8 +68,6 @@ void Introduce_export(Log* s) {
     cout << "│      " << COLOR_OPTION << "1. 开始导出" << COLOR_MENU << "           │" << endl;
     cout << "│      " << COLOR_OPTION << "2. 返回主菜单" << COLOR_MENU << "         │" << endl;
     cout << "└────────────────────────────┘" << endl;
-    cout << COLOR_RESET;
-    cout << COLOR_OPTION << "请选择操作 (1-2): " << COLOR_RESET;
 }
 
 void Introduce_delete(Log* s)
@@ -109,8 +95,6 @@ void Introduce_scoremaster(Log* s) {
     cout << "│ " << COLOR_OPTION << "   (当前成绩将被自动导出)" << COLOR_MENU << "  │" << endl;
     cout << "│ " << COLOR_OPTION << "3. 返回主菜单" << COLOR_MENU << "              │" << endl;
     cout << "└────────────────────────────┘" << endl;
-    cout << COLOR_RESET;
-    cout << COLOR_OPTION << "请选择操作 (1-3): " << COLOR_RESET;
 }
 
 void rectangle_one_row(string s)

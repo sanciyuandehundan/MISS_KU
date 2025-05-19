@@ -20,7 +20,7 @@ void Menu_main(int* ru, Log* s)
 {
 	while (1) {
 		Introduce_main(s);
-		input(ru, 5, 1);
+		input(ru, 6, 1);
 		switch (*ru)
 		{
 		case 1://成绩输入
@@ -37,6 +37,9 @@ void Menu_main(int* ru, Log* s)
 			break;
 		case 5://成绩归属
 			Menu_scoremaster(ru, s);
+			break;
+		case 6://成绩删除
+			Menu_delete(ru, s);
 			break;
 		}
 	}
@@ -125,6 +128,27 @@ void Menu_scoremaster(int* ru, Log* s)
 	}
 }
 
+void Menu_delete(int* ru, Log* s)
+{
+	bool con = true;
+	while (con) {
+		Introduce_delete(s);
+		input(ru, 2, 0);
+		switch (*ru)
+		{
+		case 0:
+			s->Show();
+			input(ru, s->game_num, 1);
+			break;
+		case 1:
+			s->Clear_all(); 
+			con = false;
+			break;
+		case 2:con = false;
+		}
+	}
+}
+
 bool Log::Import(string filename)
 {
 	json* j = open_json("ex.json");
@@ -164,7 +188,7 @@ bool Log::Export()
 	j["master"] = *master;
 	j["game"] = json::array();
 
-	for(Game* temp:game) {
+	for (Game* temp : game) {
 		json j_g;
 		j_g["target"] = temp->target;
 		j_g["time"] = temp->gametime;
@@ -237,12 +261,12 @@ void Log::Show()
 	rectangle_one_row("离散值(越小越好):" + to_string(lisan));
 	string o = "编号          时间                          离散值     总成绩       靶子类型    距离\n";
 	string t;
-	int i = 0;
+	int i = 1;
 	for (Game* g : game) {
 		t = ctime(&(g->gametime));
 		o += format("{:<14d}", i++) + format("{:<30s}", t.substr(0, t.find_last_not_of("\r\n") + 1)) + format("{:<11.4f}", lisan) + format("{:0>3d}/{:<9d}", g->Score(), g->Score_full()) + format("{:<12s}", TargetToString(g->target)) + format("{:<d}米", g->distance) + "\n";
 	}
-	rectangle_one_row(o);
+	output(o);
 }
 
 void Log::set_master()

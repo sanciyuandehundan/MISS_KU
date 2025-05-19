@@ -6,6 +6,8 @@
 void input(int* ru, int max, int min) {
     string input_str;
     bool valid = false;
+    cout << COLOR_RESET;
+    cout << COLOR_OPTION << "ÇëÊäÈë (" << min << '~' << max << "): " << COLOR_RESET;
     do {
         getline(cin, input_str);
         bool is_all_digits = true;

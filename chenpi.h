@@ -8,7 +8,7 @@
 */
 void Top(const char* c);
 /*
-主界面介绍,输入范围5~1
+主界面介绍,输入范围6~1
 */
 void Introduce_main(Log* s);
 /*
@@ -24,7 +24,7 @@ void Introduce_import(Log* s);
 */
 void Introduce_export(Log* s);
 /*
-删除界面介绍,输入范围自适应
+删除界面介绍,输入范围2~0
 */
 void Introduce_delete(Log* s);
 /*
