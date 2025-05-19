@@ -51,5 +51,12 @@ json* open_json(string s)
 
 void default_json(string s)
 {
-
+    ofstream file(s);
+    if (!file.is_open()) {
+        cout << "打开文件失败" << endl;
+        return;
+    }
+    json* j = open_json("default.json");
+    (*j)["path"] = s;
+    file << *j;
 }
