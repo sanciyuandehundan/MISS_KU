@@ -84,6 +84,11 @@ void Introduce_export(Log* s) {
     cout << COLOR_OPTION << "请选择操作 (1-2): " << COLOR_RESET;
 }
 
+void Introduce_delete(Log* s)
+{
+
+}
+
 void Introduce_view(Log* s) {
     system("cls");
     Top("查看过往成绩");

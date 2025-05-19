@@ -24,6 +24,10 @@ void Introduce_import(Log* s);
 */
 void Introduce_export(Log* s);
 /*
+删除界面介绍,输入范围自适应
+*/
+void Introduce_delete(Log* s);
+/*
 查询界面介绍,输入范围无
 */
 void Introduce_view(Log* s);
