@@ -72,7 +72,7 @@ void Menu_import(int* ru, Score* s)
 		switch (*ru)
 		{
 		case 1:
-			cout << "请输入路径:";
+			output("请输入路径:");
 			cin >> pa;
 			s->Import(pa); break;
 		case 2:con = false; break;
@@ -158,7 +158,7 @@ bool Score::Export()
 {
 	ofstream file(*master + ".json");
 	if (!file.is_open()) {
-		cout << "打开文件失败" << endl;
+		output("打开文件失败");
 		return false;
 	}
 	json j;
@@ -196,7 +196,6 @@ bool Score::Export()
 		j["game"].push_back(j_g);
 	}
 	file << j.dump(4);
-	cout << j.dump(4);
 	system("pause");
 	default_json(*master + ".json");
 	file.close();
@@ -233,11 +232,16 @@ void Score::add_game(Game* ga)
 
 void Score::Show()/////////////////////////////////////
 {
-	cout << "成绩归属者:" << master->c_str() << endl;
-	cout << "总轮数:" << game_num << endl;
-	cout << "总组数:" << round_num_all << endl;
-	cout << "总箭数:" << arrow_num_all << endl;
-	cout << "离散系数(越小越好):" << lisan << endl;
+	output("成绩归属者:" + *master);
+	output("总轮数:" + game_num);
+	output("总组数:" + round_num_all);
+	output("总箭数:" + arrow_num_all);
+	output("离散系数(越小越好):" + to_string(lisan));
+	string o="编号          时间        离散值    总成绩    靶子类型    距离";
+	int i = 0;
+	for (Game* g : game) {
+		o += format("{:5}", i++);
+	}
 }
 
 void Score::set_master()

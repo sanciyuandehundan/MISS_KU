@@ -5,17 +5,17 @@
             "arrow_num": 1,
             "distance": 40,
             "round": [
-                {
-                    "arrow": [
-                        {
-                            "position": 12,
-                            "ring": 11
-                        }
-                    ],
-                    "arrow_num": 1,
-                    "distance": 40,
-                    "target": 2
-                }
+              {
+                "arrow": [
+                  {
+                    "position": 12,
+                    "ring": 11
+                  }
+                ],
+                "arrow_num": 1,
+                "distance": 40,
+                "target": 2
+              }
             ],
             "round_num": 1,
             "target": 2,
