@@ -32,6 +32,10 @@ void Introduce_view(Score* s);
 */
 void Introduce_scoremaster(Score* s);
 /*
-自适应方框
+自适应方框,单行
 */
 void rectangle_one_row(string s);
+/*
+自适应方框,多行
+*/
+void rectangle_many_row(string s);

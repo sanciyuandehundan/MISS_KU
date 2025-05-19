@@ -42,7 +42,7 @@ void Menu_main(int* ru, Score* s)
 	}
 }
 
-void Menu_input(int* ru, Score* s)
+void Menu_input(int* ru, Score* s)///////////////////////////////////////////////////////////////////
 {
 	bool con = true;
 	while (con) {
