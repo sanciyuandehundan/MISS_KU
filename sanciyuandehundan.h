@@ -3,7 +3,7 @@
 #include "xiahui.h"
 #include "chenpi.h"
 
-class Score {
+class Log {
 public:
 	enum Target { hou = 1, huan_40_full = 2, huan_60_full = 3, huan_80_full = 4, huan_122_full = 5, huan_40_self = 6, huan_60_self = 7, huan_80_self = 8 };
 	class Round;
@@ -44,13 +44,14 @@ public:
 	};
 	class Game {
 	public:
-		Score* parent;
+		Log* parent;
 		time_t gametime;
 		Target target;
 		int distance;
 		int round_num;
 		int arrow_num;
 		Round* round[24];
+		int Score();
 		/*
 		往一场比赛添加轮次,加入成功返回true,失败则为false
 		*/
@@ -74,13 +75,13 @@ public:
 	long long round_num_all;
 	long long arrow_num_all;
 	long double lisan;
-
+	
 	/*
-	清空指定序号的轮次,包含清除内存和数量记录变量修改
+	清空指定序号的比赛,包含清除内存和数量记录变量修改
 	*/
 	void Clear_all();
 	/*
-	清空指定序号的轮次,包含清除内存和数量记录变量修改
+	清空指定序号的比赛,包含清除内存和数量记录变量修改
 	*/
 	void Clear(int index);
 	/*
@@ -106,29 +107,29 @@ public:
 	/*
 	成绩构造函数
 	*/
-	Score();
+	Log();
 };
 /*
 主菜单,输入空间指针,成绩实例指针
 */
-void Menu_main(int *ru,Score* s);
+void Menu_main(int *ru,Log* s);
 /*
 输入菜单,输入空间指针,成绩实例指针
 */
-void Menu_input(int* ru, Score* s);
+void Menu_input(int* ru, Log* s);
 /*
 导入菜单,输入空间指针,成绩实例指针
 */
-void Menu_import(int* ru, Score* s);
+void Menu_import(int* ru, Log* s);
 /*
 导出菜单,输入空间指针,成绩实例指针
 */
-void Menu_export(int* ru, Score* s);
+void Menu_export(int* ru, Log* s);
 /*
 展示成绩菜单,输入空间指针,成绩实例指针
 */
-void Menu_view(int* ru, Score* s);
+void Menu_view(int* ru, Log* s);
 /*
 归属者菜单,输入空间指针,成绩实例指针
 */
-void Menu_scoremaster(int* ru, Score* s);
+void Menu_scoremaster(int* ru, Log* s);

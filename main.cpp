@@ -3,10 +3,10 @@
 #include "chenpi.h"
 #include "sanciyuandehundan.h"
 
-Score *score;
+Log *log_;
 int ru;
 int main()
 {
-	score = new Score();
-	Menu_main(&ru, score);
+	log_ = new Log();
+	Menu_main(&ru, log_);
 }

@@ -20,7 +20,7 @@ void Top(const char* c) {
     cout << COLOR_RESET;
 }
 
-void Introduce_main(Score* s) {
+void Introduce_main(Log* s) {
     system("cls");
     Top("射箭成绩统计与分析系统");
     cout << COLOR_MENU;
@@ -35,7 +35,7 @@ void Introduce_main(Score* s) {
     cout << COLOR_OPTION << "请选择操作 (1-5): " << COLOR_RESET;
 }
 
-void Introduce_input(Score* s) {
+void Introduce_input(Log* s) {
     system("cls");
     Top("手动输入数据");
     cout << COLOR_MENU;
@@ -51,7 +51,7 @@ void Introduce_input(Score* s) {
     cout << COLOR_OPTION << "请选择操作 (1-6): " << COLOR_RESET;
 }
 
-void Introduce_import(Score* s) {
+void Introduce_import(Log* s) {
     system("cls");
     Top("导入成绩文件");
     cout << COLOR_MENU;
@@ -71,7 +71,7 @@ void Introduce_import(Score* s) {
     cout << COLOR_OPTION << "请选择操作 (1-2): " << COLOR_RESET;
 }
 
-void Introduce_export(Score* s) {
+void Introduce_export(Log* s) {
     system("cls");
     Top("导出成绩文件");
     s->Show();
@@ -84,7 +84,7 @@ void Introduce_export(Score* s) {
     cout << COLOR_OPTION << "请选择操作 (1-2): " << COLOR_RESET;
 }
 
-void Introduce_view(Score* s) {
+void Introduce_view(Log* s) {
     system("cls");
     Top("查看过往成绩");
     s->Show();
@@ -94,7 +94,7 @@ void Introduce_view(Score* s) {
     system("pause > nul");
 }
 
-void Introduce_scoremaster(Score* s) {
+void Introduce_scoremaster(Log* s) {
     system("cls");
     Top("修改成绩归属");
     cout << COLOR_MENU;

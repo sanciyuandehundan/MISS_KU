@@ -3,11 +3,11 @@
 #include "chenpi.h"
 #include "sanciyuandehundan.h"
 
-void to_json(nlohmann::json& j, const Score::Target& t) {
+void to_json(nlohmann::json& j, const Log::Target& t) {
 	j = static_cast<int>(t); // 转成整数写入
 }
-void from_json(const nlohmann::json& j, Score::Target& t) {
-	t = static_cast<Score::Target>(j.get<int>());
+void from_json(const nlohmann::json& j, Log::Target& t) {
+	t = static_cast<Log::Target>(j.get<int>());
 }
 void to_json(nlohmann::json& j, const time_t& t) {
 	j = static_cast<long long>(t); // 转成整数写入
@@ -16,7 +16,7 @@ void from_json(const nlohmann::json& j, time_t& t) {
 	t = static_cast<time_t>(j.get<long long>());
 }
 
-void Menu_main(int* ru, Score* s)
+void Menu_main(int* ru, Log* s)
 {
 	while (1) {
 		Introduce_main(s);
@@ -42,7 +42,7 @@ void Menu_main(int* ru, Score* s)
 	}
 }
 
-void Menu_input(int* ru, Score* s)///////////////////////////////////////////////////////////////////
+void Menu_input(int* ru, Log* s)///////////////////////////////////////////////////////////////////
 {
 	bool con = true;
 	while (con) {
@@ -62,7 +62,7 @@ void Menu_input(int* ru, Score* s)//////////////////////////////////////////////
 	}
 }
 
-void Menu_import(int* ru, Score* s)
+void Menu_import(int* ru, Log* s)
 {
 	string pa;
 	bool con = true;
@@ -82,7 +82,7 @@ void Menu_import(int* ru, Score* s)
 	}
 }
 
-void Menu_export(int* ru, Score* s)
+void Menu_export(int* ru, Log* s)
 {
 	bool con = true;
 	while (con) {
@@ -98,12 +98,12 @@ void Menu_export(int* ru, Score* s)
 	}
 }
 
-void Menu_view(int* ru, Score* s)
+void Menu_view(int* ru, Log* s)
 {
 	Introduce_view(s);
 }
 
-void Menu_scoremaster(int* ru, Score* s)
+void Menu_scoremaster(int* ru, Log* s)
 {
 	bool con = true;
 	while (con) {
@@ -124,7 +124,7 @@ void Menu_scoremaster(int* ru, Score* s)
 	}
 }
 
-bool Score::Import(string filename)//缺少同归属者分支
+bool Log::Import(string filename)//缺少同归属者分支
 {
 	json* j = open_json(filename);
 	if ((this->master == nullptr) || !(master->_Equal((*j)["master"]))) {
@@ -154,7 +154,7 @@ bool Score::Import(string filename)//缺少同归属者分支
 	}
 }
 
-bool Score::Export()
+bool Log::Export()
 {
 	ofstream file(*master + ".json");
 	if (!file.is_open()) {
@@ -202,67 +202,76 @@ bool Score::Export()
 	return true;
 }
 
-void Score::Clear_all()
+void Log::Clear_all()
 {
 	for (Game* g : game) {
+		round_num_all -= g->round_num;
+		arrow_num_all -= g->arrow_num;
 		g->Clear_all_round();
 		delete g;
 	}
 	game_num = 0;
 }
 
-void Score::Clear(int index)
+void Log::Clear(int index)
 {
 	Game* g = game[index];
 	for (int i = index; i < game_num - 1; i++) {
 		game[i] = game[i + 1];
 	}
+	round_num_all -= g->round_num;
+	arrow_num_all -= g->arrow_num;
 	game[game_num] = nullptr;
 	g->Clear_all_round();
 	delete g;
 	game_num--;
 }
 
-void Score::add_game(Game* ga)
+void Log::add_game(Game* ga)
 {
 	ga->parent = this;
 	game.push_back(ga);
 	game_num++;
 }
 
-void Score::Show()/////////////////////////////////////
+void Log::Show()/////////////////////////////////////
 {
 	output("成绩归属者:" + *master);
 	output("总轮数:" + game_num);
 	output("总组数:" + round_num_all);
 	output("总箭数:" + arrow_num_all);
 	output("离散系数(越小越好):" + to_string(lisan));
-	string o="编号          时间        离散值    总成绩    靶子类型    距离";
-	int i = 0;
+	string o = "编号          时间                          离散值    总成绩    靶子类型    距离\n";
+	string t;
+	size_t last_non_newline;
+	int i = 999;
 	for (Game* g : game) {
-		o += format("{:5}", i++);
+		t = ctime(&(g->gametime));
+		last_non_newline = t.find_last_not_of("\r\n");
+		o += format("{:<14d}", i++) + format("{:<30s}", t.substr(0, last_non_newline + 1)) + format("{:<10f}",lisan);
 	}
+	rectangle_one_row(o);
 }
 
-void Score::set_master()
+void Log::set_master()
 {
 	cout << "请输入欲修改归属者的名字:";
 	cin >> *master;
 }
 
-Score::Score()
+Log::Log()
 {
 	Import((*open_json("default.json"))["path"]);
 }
 
-Score::Round::Round(Target t, int d)
+Log::Round::Round(Target t, int d)
 {
 	target = t;
 	distance = d;
 	arrow_num = 0;
 }
 
-bool Score::Round::add_arrow(Arrow* arr)
+bool Log::Round::add_arrow(Arrow* arr)
 {
 	if (arrow_num >= 23)return false;
 	arr->parent = this;
@@ -273,7 +282,7 @@ bool Score::Round::add_arrow(Arrow* arr)
 	return true;
 }
 
-void Score::Round::Clear_arrow(int index)
+void Log::Round::Clear_arrow(int index)
 {
 	Arrow* anchor = arrow[index];
 	for (int i = index; i < arrow_num - 1; i++) {
@@ -286,7 +295,7 @@ void Score::Round::Clear_arrow(int index)
 	delete anchor;
 }
 
-void Score::Round::Clear_all_arrow()
+void Log::Round::Clear_all_arrow()
 {
 	for (int i = 0; i < arrow_num; i++) {
 		delete arrow[i];
@@ -296,7 +305,18 @@ void Score::Round::Clear_all_arrow()
 	arrow_num = 0;
 }
 
-bool Score::Game::add_round(Round* ro)
+int Log::Game::Score()
+{
+	int re=0;
+	for (Round* r : round) {
+		for (Arrow* a : r->arrow) {
+			re += a->ring;
+		}
+	}
+	return 0;
+}
+
+bool Log::Game::add_round(Round* ro)
 {
 	if (round_num >= 23)return false;
 	ro->parent = this;
@@ -307,7 +327,7 @@ bool Score::Game::add_round(Round* ro)
 	return true;
 }
 
-void Score::Game::Clear_round(int index)
+void Log::Game::Clear_round(int index)
 {
 	Round* anchor = round[index];
 	for (int i = index; i < round_num - 1; i++) {
@@ -320,7 +340,7 @@ void Score::Game::Clear_round(int index)
 	round_num--;
 }
 
-void Score::Game::Clear_all_round()
+void Log::Game::Clear_all_round()
 {
 	for (int i = 0; i < round_num; i++) {
 		round[i]->Clear_all_arrow();
@@ -330,7 +350,7 @@ void Score::Game::Clear_all_round()
 	round_num = 0;
 }
 
-Score::Game::Game(time_t time)
+Log::Game::Game(time_t time)
 {
 	gametime = time;
 	distance = 0;
@@ -338,7 +358,7 @@ Score::Game::Game(time_t time)
 	arrow_num = 0;
 }
 
-Score::Arrow::Arrow(int r, int p)
+Log::Arrow::Arrow(int r, int p)
 {
 	ring = r;
 	position = p;
