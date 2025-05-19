@@ -149,7 +149,7 @@ bool Score::Import(string filename)//缺少同归属者分支
 		delete j;
 		return true;
 	}
-	else {
+	else {//////////////////////////////////////////
 
 	}
 }
@@ -231,7 +231,7 @@ void Score::add_game(Game* ga)
 	game_num++;
 }
 
-void Score::Show()
+void Score::Show()/////////////////////////////////////
 {
 	cout << "成绩归属者:" << master->c_str() << endl;
 	cout << "总轮数:" << game_num << endl;
