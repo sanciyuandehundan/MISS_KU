@@ -73,7 +73,15 @@ void Introduce_export(Log* s) {
 
 void Introduce_delete(Log* s)
 {
-
+    system("cls");
+    Top("删除过往成绩");
+    s->Show();
+    cout << COLOR_MENU;
+    cout << "┌─────────────────────────────────────┐" << endl;
+    cout << "│   " << COLOR_OPTION << "0.查看全部并选择指定序号成绩删除" << COLOR_MENU << "  │" << endl;
+    cout << "│   " << COLOR_OPTION << "1.全部删除" << COLOR_MENU << "                        │" << endl;
+    cout << "│   " << COLOR_OPTION << "2.返回主菜单" << COLOR_MENU << "                      │" << endl;
+    cout << "└─────────────────────────────────────┘" << endl;
 }
 
 void Introduce_view(Log* s) {
