@@ -138,6 +138,11 @@ void Menu_delete(int* ru, Log* s)
 {
 	bool con = true;
 	while (con) {
+		if (s->game_num == 0) {
+			rectangle_one_row("已无可删除内容");
+			con = false;
+			continue;
+		}
 		Introduce_delete(s);
 		input(ru, 2, 0);
 		switch (*ru)
@@ -145,6 +150,7 @@ void Menu_delete(int* ru, Log* s)
 		case 0:
 			s->Show();
 			input(ru, s->game_num, 1);
+			s->Clear(0);
 			break;
 		case 1:
 			s->Clear_all(); 
@@ -245,7 +251,7 @@ void Log::Clear(int index)
 	for (int i = index; i < game_num - 1; i++) {
 		game[i] = game[i + 1];
 	}
-	game[game_num] = nullptr;
+	if (game_num > 1)game[game_num] = nullptr;
 	g->Clear_all_round();
 	delete g;
 	game_num--;
