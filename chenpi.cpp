@@ -134,11 +134,15 @@ void output(string s)
     cout << "¨U";
     for (char c : s) {
         if (c != '\n') {
-            
+            cout << c;
+        }
+        else {
+            cout << "¨U" << endl << "¨U";
+
         }
     }
     cout << "¨^";
-    for (int i = 0; i < length; i++) {
+    for (int i = 0; i < max; i++) {
         cout << "¨T";
     }
     cout << "¨a" << endl;
