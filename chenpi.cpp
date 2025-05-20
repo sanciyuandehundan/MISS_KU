@@ -116,5 +116,30 @@ void rectangle_one_row(string s)
 
 void output(string s)
 {
-
+    int length = 0;
+    int max = 0;
+    cout << COLOR_TITLE;
+    for (char c : s) {
+        if (c != '\n') length++;
+        else {
+            if (length > max) max = length;
+            length = 0;
+        }
+    }
+    cout << "¨X";
+    for (int i = 0; i < max; i++) {
+        cout << "¨T";
+    }
+    cout << "¨[" << endl;
+    cout << "¨U";
+    for (char c : s) {
+        if (c != '\n') {
+            
+        }
+    }
+    cout << "¨^";
+    for (int i = 0; i < length; i++) {
+        cout << "¨T";
+    }
+    cout << "¨a" << endl;
 }
