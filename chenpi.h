@@ -8,7 +8,7 @@
 */
 void Top(const char* c);
 /*
-主界面介绍,输入范围6~1
+主界面介绍,输入范围7~1
 */
 void Introduce_main(Log* s);
 /*

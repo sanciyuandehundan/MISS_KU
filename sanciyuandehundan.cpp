@@ -21,7 +21,7 @@ void Menu_main(int* ru, Log* s)
 	bool con = true;
 	while (con) {
 		Introduce_main(s);
-		input(ru, 6, 1);
+		input(ru, 7, 1);
 		switch (*ru)
 		{
 		case 1://成绩输入
@@ -274,7 +274,7 @@ void Log::Show()
 		o += format("{:<14d}", i++) + format("{:<30s}", t.substr(0, t.find_last_not_of("\r\n") + 1)) + format("{:<11.4f}", lisan) + format("{:0>3d}/{:<9d}", g->Score(), g->Score_full()) + format("{:<12s}", TargetToString(g->target)) + format("{:<d}米", g->distance) + "\n";
 	}
 	output(o);
-	rectangle_one_row(o);
+	//rectangle_one_row(o);
 }
 
 void Log::set_master()
@@ -437,6 +437,7 @@ const char* Log::TargetToString(Target ta)
 		return "80半环靶";
 		break;
 	default:
+		return "";
 		break;
 	}
 }

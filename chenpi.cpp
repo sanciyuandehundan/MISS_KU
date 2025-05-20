@@ -24,6 +24,7 @@ void Introduce_main(Log* s) {
     cout << "│     " << COLOR_OPTION << "4. 查看过往成绩" << COLOR_MENU << "        │" << endl;
     cout << "│     " << COLOR_OPTION << "5. 修改成绩归属" << COLOR_MENU << "        │" << endl;
     cout << "│     " << COLOR_OPTION << "6. 删除过往成绩" << COLOR_MENU << "        │" << endl;
+    cout << "│     " << COLOR_OPTION << "7. 退出程序    " << COLOR_MENU << "        │" << endl;
     cout << "└────────────────────────────┘" << endl;
 }
 
@@ -132,13 +133,13 @@ void output(string s)
     }
     cout << "╗" << endl;
     cout << "║";
-    for (char c : s) {
-        if (c != '\n') {
-            cout << c;
+    for (long long i = 0; i < s.length();i++) {
+        if (s[i] != '\n') {
+            cout << s[i];
         }
         else {
-            cout << "║" << endl << "║";
-
+            cout << "║" << endl;
+            if (s[i + 1] != '\0') cout << "║";
         }
     }
     cout << "╚";
