@@ -1,29 +1,22 @@
 {
-    "arrow_num_all": 1,
     "game": [
         {
-            "arrow_num": 1,
             "distance": 40,
             "round": [
-              {
-                "arrow": [
-                  {
-                    "position": 12,
-                    "ring": 11
-                  }
-                ],
-                "arrow_num": 1,
-                "distance": 40,
-                "target": 2
-              }
+                {
+                    "arrow": [
+                        {
+                            "position": 12,
+                            "ring": 11
+                        }
+                    ],
+                    "distance": 40,
+                    "target": 2
+                }
             ],
-            "round_num": 1,
             "target": 2,
             "time": 1000000
         }
     ],
-    "game_num": 1,
-    "lisan": 3.0,
-    "master": "sa",
-    "round_num_all": 2
+    "master": "sa"
 }

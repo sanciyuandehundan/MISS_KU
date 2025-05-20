@@ -18,7 +18,8 @@ void from_json(const nlohmann::json& j, time_t& t) {
 
 void Menu_main(int* ru, Log* s)
 {
-	while (1) {
+	bool con = true;
+	while (con) {
 		Introduce_main(s);
 		input(ru, 6, 1);
 		switch (*ru)
@@ -40,6 +41,10 @@ void Menu_main(int* ru, Log* s)
 			break;
 		case 6://成绩删除
 			Menu_delete(ru, s);
+			break;
+		case 7://关闭程序
+			s->Export();
+			con = false;
 			break;
 		}
 	}
@@ -153,6 +158,11 @@ void Menu_delete(int* ru, Log* s)
 bool Log::Import(string filename)
 {
 	json* j = open_json(filename);
+	if (j == nullptr) {
+		rectangle_one_row("无法导入此文件");
+		system("pause");
+		return false;
+	}
 	if ((this->master == nullptr) || !(master->_Equal((*j)["master"]))) {
 		master = new string((*j)["master"]);
 	}
@@ -276,7 +286,10 @@ void Log::set_master()
 
 Log::Log()
 {
-	Import((*open_json("default.json"))["path"]);
+	if (!Import((*open_json("default.json"))["path"])) {
+		rectangle_one_row("无法打开上次打开的文件");
+		system("pause");
+	}
 }
 
 Log::Round::Round(Target t, int d)
