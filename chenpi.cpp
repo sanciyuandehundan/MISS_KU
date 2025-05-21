@@ -33,12 +33,9 @@ void Introduce_input(Log* s) {
     Top("手动输入数据");
     cout << COLOR_MENU;
     cout << "┌────────────────────────────┐" << endl;
-    cout << "│  " << COLOR_OPTION << "1. 设定靶子类型" << COLOR_MENU << "           │" << endl;
-    cout << "│  " << COLOR_OPTION << "2. 设定距离" << COLOR_MENU << "               │" << endl;
-    cout << "│  " << COLOR_OPTION << "3. 设定轮数" << COLOR_MENU << "               │" << endl;
-    cout << "│  " << COLOR_OPTION << "4. 设定每轮箭数" << COLOR_MENU << "           │" << endl;
-    cout << "│  " << COLOR_OPTION << "5. 开始输入" << COLOR_MENU << "               │" << endl;
-    cout << "│  " << COLOR_OPTION << "6. 返回主菜单" << COLOR_MENU << "             │" << endl;
+    cout << "│    " << COLOR_OPTION << "1. 修改现有数据" << COLOR_MENU << "         │" << endl;
+    cout << "│    " << COLOR_OPTION << "2. 添加新数据" << COLOR_MENU << "           │" << endl;
+    cout << "│    " << COLOR_OPTION << "3. 返回主菜单" << COLOR_MENU << "           │" << endl;
     cout << "└────────────────────────────┘" << endl;
 }
 
