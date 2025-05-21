@@ -22,9 +22,22 @@ public:
 	public:
 		Game* parent;
 		Target target;
+		long double lisan;
 		int distance;
 		int arrow_num;
 		Arrow* arrow[24];
+		/*
+		计算总分
+		*/
+		int Score();
+		/*
+		计算满分
+		*/
+		int Score_full();
+		/*
+		显示箭矢信息
+		*/
+		void Show_arrow();
 		/*
 		轮次构造函数,t靶子,d距离
 		*/
@@ -51,6 +64,10 @@ public:
 		int round_num;
 		int arrow_num;
 		Round* round[24];
+		/*
+		显示轮次信息
+		*/
+		void Show_round();
 		/*
 		计算满分
 		*/
