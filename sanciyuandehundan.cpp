@@ -298,6 +298,32 @@ Log::Log()
 	}
 }
 
+int Log::Round::Score()
+{
+	int re = 0, i, j;
+	for (j = 0; j < arrow_num; j++) {
+		re += arrow[j]->ring;
+		if (arrow[j]->ring == 11)re--;
+	}
+	return re;
+}
+
+int Log::Round::Score_full()
+{
+	return arrow_num * (target == hou ? 5 : 10);
+}
+
+void Log::Round::Show_arrow()
+{
+	string o = "编号      环    方位\n";
+	int in = 1;
+	for (int i = 0; i < arrow_num; i++) {
+		o += format("{:<14d}", in++) + format("{:<d}", arrow[i]->ring) + format("{:<d}点钟方向", arrow[i]->position) + "\n";
+	}
+	output(o);
+	//rectangle_one_row(o);
+}
+
 Log::Round::Round(Target t, int d)
 {
 	target = t;
@@ -339,9 +365,20 @@ void Log::Round::Clear_all_arrow()
 	arrow_num = 0;
 }
 
+void Log::Game::Show_round()
+{
+	string o = "编号      箭矢总数    离散值     总成绩       靶子类型    距离\n";
+	int in = 1;
+	for (int i = 0; i < round_num; i++) {
+		o += format("{:<14d}", in++) + format("{:<d}", round[i]->arrow_num) + format("{:<11.4f}", round[i]->lisan) + format("{:0>3d} / {:<9d}", round[i]->Score(), round[i]->Score_full()) + format("{:<12s}", TargetToString(round[i]->target)) + format("{:<d}米", round[i]->distance) + "\n";
+	}
+	output(o);
+	//rectangle_one_row(o);
+}
+
 int Log::Game::Score_full()
 {
-	return round_num * arrow_num * (target == 1 ? 5 : 10);
+	return round_num * arrow_num * (target == hou ? 5 : 10);
 }
 
 int Log::Game::Score()
