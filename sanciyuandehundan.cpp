@@ -16,68 +16,107 @@ void from_json(const nlohmann::json& j, time_t& t) {
 	t = static_cast<time_t>(j.get<long long>());
 }
 
-void Menu_main(int* ru, Log* s)
+void Menu_main(Log* s)
 {
 	bool con = true;
+	int ru;
 	while (con) {
 		Introduce_main(s);
-		input(ru, 7, 1);
-		switch (*ru)
+		input(&ru, 5, 1);
+		switch (ru)
 		{
 		case 1://成绩输入
-			Menu_input(ru, s);
+			Menu_input(s);
 			break;
 		case 2://成绩导入
-			Menu_import(ru, s);
+			Menu_import(s);
 			break;
 		case 3://成绩导出
-			Menu_export(ru, s);
+			Menu_export(s);
 			break;
 		case 4://成绩查询
-			Menu_view(ru, s);
+			Menu_view(s);
 			break;
-		case 5://成绩归属
-			Menu_scoremaster(ru, s);
-			break;
-		case 6://成绩删除
-			Menu_delete(ru, s);
-			break;
-		case 7://关闭程序
+		case 5://关闭程序
 			s->Export();
 			con = false;
 			break;
 		}
 	}
 }
+//T
 
-void Menu_input(int* ru, Log* s)///////////////////////////////////////////////////////////////////
+void Menu_input(Log* s)///////////////////////////////////////////////////////////////////
 {
 	bool con = true;
+	int ru;
 	while (con) {
 		Introduce_input(s);
-		input(ru, 6, 1);
-		switch (*ru)
+		input(&ru, 3, 1);
+		switch (ru)
 		{
-		case 1:cout << "未实现" << endl; system("pause"); break;
-		case 2:cout << "未实现" << endl; system("pause"); break;
-		case 3:cout << "未实现" << endl; system("pause"); break;
-		case 4:cout << "未实现" << endl; system("pause"); break;
-		case 5:cout << "未实现" << endl; system("pause"); break;
-		case 6:con = false; break;
+		case 1:
+			//rectangle_one_row("修改现有数据"); 
+			Menu_input_edit(s);
+			break;
+		case 2:
+			//rectangle_one_row("添加新数据"); 
+			Menu_input_add(s);
+			break;
+		case 3:con = false; break;
 		default:
 			break;
 		}
 	}
 }
 
-void Menu_import(int* ru, Log* s)
+void Menu_input_add(Log* s)
 {
+
+}
+
+void Menu_input_edit(Log* s)
+{
+	s->Show();
+	rectangle_one_row("请选择要修改的比赛数据");
+	int ru,index;
+	input(&index, s->game_num, 1);
+	output("操作类型:\n1.修改\n2.删除\n3.选择轮次数据\n");
+	input(&ru, 3, 1);
+	switch (ru)
+	{
+	case 1:
+		Menu_input_edit_edit(s);
+		break;
+	case 2:
+		Menu_input_edit_delete(s);
+		break;
+	}
+}
+
+void Menu_input_edit_edit(Log* s)
+{
+	//int index = *ru;
+	int ru;
+	rectangle_one_row("请选择要修改的数据项");
+	output("1.靶子类型\n2.距离\n");
+	input(&ru, 2, 1);
+}
+
+void Menu_input_edit_delete(Log* s)
+{
+	//s->Clear(*ru - 1);
+}
+
+void Menu_import(Log* s)
+{
+	int ru;
 	string pa;
 	bool con = true;
 	while (con) {
 		Introduce_import(s);
-		input(ru, 2, 1);
-		switch (*ru)
+		input(&ru, 2, 1);
+		switch (ru)
 		{
 		case 1:
 			cout << COLOR_RESET;
@@ -90,14 +129,16 @@ void Menu_import(int* ru, Log* s)
 		}
 	}
 }
+//T
 
-void Menu_export(int* ru, Log* s)
+void Menu_export(Log* s)
 {
+	int ru;
 	bool con = true;
 	while (con) {
 		Introduce_export(s);
-		input(ru, 2, 1);
-		switch (*ru)
+		input(&ru, 2, 1);
+		switch (ru)
 		{
 		case 1:s->Export(); break;
 		case 2:con = false; break;
@@ -106,20 +147,22 @@ void Menu_export(int* ru, Log* s)
 		}
 	}
 }
+//T
 
-void Menu_view(int* ru, Log* s)
+void Menu_view(Log* s)
 {
 	Introduce_view(s);
 	s->Show();
 }
 
-void Menu_scoremaster(int* ru, Log* s)
+void Menu_scoremaster(Log* s)
 {
+	int ru;
 	bool con = true;
 	while (con) {
 		Introduce_scoremaster(s);
-		input(ru, 3, 1);
-		switch (*ru)
+		input(&ru, 3, 1);
+		switch (ru)
 		{
 		case 1:s->set_master(); break;
 		case 2:
@@ -133,9 +176,11 @@ void Menu_scoremaster(int* ru, Log* s)
 		}
 	}
 }
+//D
 
-void Menu_delete(int* ru, Log* s)
+void Menu_delete(Log* s)
 {
+	int ru;
 	bool con = true;
 	while (con) {
 		if (s->game_num == 0) {
@@ -144,12 +189,12 @@ void Menu_delete(int* ru, Log* s)
 			continue;
 		}
 		Introduce_delete(s);
-		input(ru, 2, 0);
-		switch (*ru)
+		input(&ru, 2, 0);
+		switch (ru)
 		{
 		case 0:
 			s->Show();
-			input(ru, s->game_num, 1);
+			input(&ru, s->game_num, 1);
 			s->Clear(0);
 			break;
 		case 1:
@@ -160,6 +205,7 @@ void Menu_delete(int* ru, Log* s)
 		}
 	}
 }
+//D
 
 bool Log::Import(string filename)
 {
@@ -193,6 +239,7 @@ bool Log::Import(string filename)
 	delete j;
 	return true;
 }
+//T
 
 bool Log::Export()
 {
@@ -234,6 +281,7 @@ bool Log::Export()
 	file.close();
 	return true;
 }
+//T
 
 void Log::Clear_all()
 {
@@ -244,6 +292,7 @@ void Log::Clear_all()
 	game_num = 0;
 	game.resize(0);
 }
+//T
 
 void Log::Clear(int index)
 {
@@ -257,6 +306,7 @@ void Log::Clear(int index)
 	game_num--;
 	game.resize(game.size() - 1);
 }
+//T
 
 void Log::add_game(Game* ga)
 {
@@ -264,6 +314,7 @@ void Log::add_game(Game* ga)
 	game.push_back(ga);
 	game_num++;
 }
+//T
 
 void Log::Show()
 {

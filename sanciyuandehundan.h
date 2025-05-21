@@ -143,28 +143,44 @@ public:
 /*
 主菜单,输入空间指针,成绩实例指针
 */
-void Menu_main(int *ru,Log* s);
+void Menu_main(Log* s);
 /*
 输入菜单,输入空间指针,成绩实例指针
 */
-void Menu_input(int* ru, Log* s);
+void Menu_input(Log* s);
+/*
+输入菜单_添加,输入空间指针,成绩实例指针
+*/
+void Menu_input_add(Log* s);
+/*
+输入菜单_修改,输入空间指针,成绩实例指针
+*/
+void Menu_input_edit(Log* s);
+/*
+输入菜单_修改_修改,输入空间指针,成绩实例指针
+*/
+void Menu_input_edit_edit(Log* s);
+/*
+输入菜单_修改_删除,输入空间指针,成绩实例指针
+*/
+void Menu_input_edit_delete(Log* s);
 /*
 导入菜单,输入空间指针,成绩实例指针
 */
-void Menu_import(int* ru, Log* s);
+void Menu_import(Log* s);
 /*
 导出菜单,输入空间指针,成绩实例指针
 */
-void Menu_export(int* ru, Log* s);
+void Menu_export(Log* s);
 /*
 展示成绩菜单,输入空间指针,成绩实例指针
 */
-void Menu_view(int* ru, Log* s);
+void Menu_view(Log* s);
 /*
 归属者菜单,输入空间指针,成绩实例指针
 */
-void Menu_scoremaster(int* ru, Log* s);
+void Menu_scoremaster(Log* s);
 /*
 删除成绩菜单,输入空间指针,成绩实例指针
 */
-void Menu_delete(int* ru, Log* s);
+void Menu_delete(Log* s);
