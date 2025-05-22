@@ -9,13 +9,26 @@
                             "position": 12,
                             "ring": 11
                         }
-                    ],
-                    "distance": 40,
-                    "target": 2
+                    ]
                 }
             ],
             "target": 2,
             "time": 1000000
+        },
+        {
+            "distance": 24,
+            "round": [
+                {
+                    "arrow": [
+                        {
+                            "position": 1,
+                            "ring": 11
+                        }
+                    ]
+                }
+            ],
+            "target": 3,
+            "time": 1747929396
         }
     ],
     "master": "sa"

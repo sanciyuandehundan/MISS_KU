@@ -8,11 +8,15 @@
 */
 void Top(const char* c);
 /*
-主界面介绍,输入范围7~1
+输出暂停界面
+*/
+void Stop();
+/*
+主界面介绍,输入范围5~1
 */
 void Introduce_main(Log* s);
 /*
-手动输入界面介绍,输入范围6~1
+手动输入界面介绍,输入范围6~1,废弃
 */
 void Introduce_input(Log* s);
 /*
@@ -36,7 +40,7 @@ void Introduce_view(Log* s);
 */
 void Introduce_scoremaster(Log* s);
 /*
-自适应方框,单行
+自适应方框,单行,废弃
 */
 void rectangle_one_row(string s);
 /*

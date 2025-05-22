@@ -13,18 +13,25 @@ void Top(const char* c) {
     cout << COLOR_RESET;
 }
 
+void Stop()
+{
+    cout << COLOR_MENU;
+    cout << "────────────────────────────────" << endl;
+    cout << COLOR_OPTION << "按任意键返回..." << COLOR_RESET;
+    system("pause > nul");
+}
+
 void Introduce_main(Log* s) {
     system("cls");
     Top("射箭成绩统计与分析系统");
     cout << COLOR_MENU;
     cout << "┌────────────────────────────┐" << endl;
-    cout << "│     " << COLOR_OPTION << "1. 手动输入成绩" << COLOR_MENU << "        │" << endl;
-    cout << "│     " << COLOR_OPTION << "2. 导入成绩文件" << COLOR_MENU << "        │" << endl;
-    cout << "│     " << COLOR_OPTION << "3. 导出成绩文件" << COLOR_MENU << "        │" << endl;
-    cout << "│     " << COLOR_OPTION << "4. 查看过往成绩" << COLOR_MENU << "        │" << endl;
-    cout << "│     " << COLOR_OPTION << "5. 修改成绩归属" << COLOR_MENU << "        │" << endl;
-    cout << "│     " << COLOR_OPTION << "6. 删除过往成绩" << COLOR_MENU << "        │" << endl;
-    cout << "│     " << COLOR_OPTION << "7. 退出程序    " << COLOR_MENU << "        │" << endl;
+    cout << "│     " << COLOR_OPTION << "1. 编辑现有成绩" << COLOR_MENU << "        │" << endl;
+    cout << "│     " << COLOR_OPTION << "2. 添加比赛记录" << COLOR_MENU << "        │" << endl;
+    cout << "│     " << COLOR_OPTION << "3. 导入成绩文件" << COLOR_MENU << "        │" << endl;
+    cout << "│     " << COLOR_OPTION << "4. 导出成绩文件" << COLOR_MENU << "        │" << endl;
+    cout << "│     " << COLOR_OPTION << "5. 查看过往成绩" << COLOR_MENU << "        │" << endl;
+    cout << "│     " << COLOR_OPTION << "6. 退出程序    " << COLOR_MENU << "        │" << endl;
     cout << "└────────────────────────────┘" << endl;
 }
 
@@ -83,11 +90,6 @@ void Introduce_delete(Log* s)
 void Introduce_view(Log* s) {
     system("cls");
     Top("查看过往成绩");
-    s->Show();
-    cout << COLOR_MENU;
-    cout << "────────────────────────────────" << endl;
-    cout << COLOR_OPTION << "按任意键返回主菜单..." << COLOR_RESET;
-    system("pause > nul");
 }
 
 void Introduce_scoremaster(Log* s) {
@@ -108,22 +110,24 @@ void rectangle_one_row(string s)
     size_t length = s.length();  // 返回字节数（取决于编码）
     cout << "╔";
     for (int i = 0; i < length; i++) {
-        cout << "═" ;
+        cout << "═";
     }
     cout << "╗" << endl;
-    cout<<"║" << s << "║" << endl; 
-    cout << "╚" ;
+    cout << "║" << s << "║" << endl;
+    cout << "╚";
     for (int i = 0; i < length; i++) {
-        cout << "═" ;
+        cout << "═";
     }
     cout << "╝" << endl;
 }
 
 void output(string s)
 {
+    if (s[s.length() - 1] != '\n') {
+        s += '\n';
+    }
     int length = 0;
     int max = 0;
-    cout << COLOR_TITLE;
     for (char c : s) {
         if (c != '\n') length++;
         else {
@@ -131,24 +135,25 @@ void output(string s)
             length = 0;
         }
     }
+    cout << COLOR_MENU;
     cout << "╔";
     for (int i = 0; i < max; i++) {
         cout << "═";
     }
     cout << "╗" << endl;
-    cout << "║";
-    for (long long i = 0; i < s.length();i++) {
+    cout << "║" << COLOR_OPTION;
+    for (unsigned long long i = 0; i < s.length(); i++) {
         if (s[i] != '\n') {
             cout << s[i];
         }
         else {
-            cout << "║" << endl;
-            if (s[i + 1] != '\0') cout << "║";
+            cout << COLOR_MENU << "║" << COLOR_OPTION << endl;
+            if (s[i + 1] != '\0') cout << COLOR_MENU << "║" << COLOR_OPTION;
         }
     }
-    cout << "╚";
+    cout << COLOR_MENU << "╚";
     for (int i = 0; i < max; i++) {
         cout << "═";
     }
-    cout << "╝" << endl;
+    cout << "╝" << endl << COLOR_RESET;
 }

@@ -21,9 +21,7 @@ public:
 	class Round {
 	public:
 		Game* parent;
-		Target target;
 		long double lisan;
-		int distance;
 		int arrow_num;
 		Arrow* arrow[24];
 		/*
@@ -41,7 +39,7 @@ public:
 		/*
 		轮次构造函数,t靶子,d距离
 		*/
-		Round(Target t, int d);
+		Round();
 		/*
 		往轮次加入箭矢记录,加入成功返回true,失败则为false
 		*/
@@ -145,25 +143,25 @@ public:
 */
 void Menu_main(Log* s);
 /*
-输入菜单,输入空间指针,成绩实例指针
+修改菜单,输入空间指针,成绩实例指针
 */
-void Menu_input(Log* s);
-/*
-输入菜单_添加,输入空间指针,成绩实例指针
-*/
-void Menu_input_add(Log* s);
-/*
-输入菜单_修改,输入空间指针,成绩实例指针
-*/
-void Menu_input_edit(Log* s);
+void Menu_game(Log* s);
 /*
 输入菜单_修改_修改,输入空间指针,成绩实例指针
 */
-void Menu_input_edit_edit(Log* s);
+void Menu_game_amend(Log::Game* g);
 /*
-输入菜单_修改_删除,输入空间指针,成绩实例指针
+输入菜单_修改_增加,输入空间指针,成绩实例指针
 */
-void Menu_input_edit_delete(Log* s);
+void Menu_game_addround(Log::Game* g);
+/*
+添加比赛菜单,输入空间指针,成绩实例指针
+*/
+void Menu_addgame(Log* s);
+/*
+输入菜单_修改_轮次,输入空间指针,成绩实例指针
+*/
+void Menu_game_round(Log::Game* g);
 /*
 导入菜单,输入空间指针,成绩实例指针
 */
@@ -176,11 +174,3 @@ void Menu_export(Log* s);
 展示成绩菜单,输入空间指针,成绩实例指针
 */
 void Menu_view(Log* s);
-/*
-归属者菜单,输入空间指针,成绩实例指针
-*/
-void Menu_scoremaster(Log* s);
-/*
-删除成绩菜单,输入空间指针,成绩实例指针
-*/
-void Menu_delete(Log* s);

@@ -22,22 +22,25 @@ void Menu_main(Log* s)
 	int ru;
 	while (con) {
 		Introduce_main(s);
-		input(&ru, 5, 1);
+		input(&ru, 6, 1);
 		switch (ru)
 		{
-		case 1://成绩输入
-			Menu_input(s);
+		case 1://成绩修改
+			Menu_game(s);
 			break;
-		case 2://成绩导入
+		case 2://成绩添加
+			Menu_addgame(s);
+			break;
+		case 3://成绩导入
 			Menu_import(s);
 			break;
-		case 3://成绩导出
+		case 4://成绩导出
 			Menu_export(s);
 			break;
-		case 4://成绩查询
+		case 5://成绩查询
 			Menu_view(s);
 			break;
-		case 5://关闭程序
+		case 6://关闭程序
 			s->Export();
 			con = false;
 			break;
@@ -46,67 +49,179 @@ void Menu_main(Log* s)
 }
 //T
 
-void Menu_input(Log* s)///////////////////////////////////////////////////////////////////
+void Menu_game(Log* s)
 {
-	bool con = true;
+	system("cls");
+	Top("编辑现有成绩");
+	s->Show();
+	output("请选择要修改的比赛数据");
+	int ru, index;
+	input(&index, s->game_num, 1);
+	index--;
+	system("cls");
+	Top("比赛数据修改");
+	s->game[index]->Show_round();
+	output("操作类型:\n1.添加轮次\n2.修改\n3.删除\n4.选择轮次数据\n");
+	input(&ru, 4, 1);
+	switch (ru)
+	{
+	case 1:
+		Menu_game_addround(s->game[index]);
+		break;
+	case 2:
+		Menu_game_amend(s->game[index]);
+		break;
+	case 3:
+		s->Clear(index);
+		break;
+	case 4:
+		Menu_game_round(s->game[index]);
+		break;
+	}
+}
+//T
+
+void Menu_game_amend(Log::Game* g)
+{
 	int ru;
-	while (con) {
-		Introduce_input(s);
-		input(&ru, 3, 1);
-		switch (ru)
+	system("cls");
+	Top("修改比赛数据");
+	output("请选择要修改的数据项");
+	output("1.靶子类型\n2.距离\n");
+	input(&ru, 2, 1);
+	switch (ru)
+	{
+	case 1:
+		output("1.侯靶\n2.40全环靶\n3.60全环靶\n4.80全环靶\n5.122全环靶\n6.40半环靶\n7.60半环靶\n8.80半环靶\n请输入欲修改的靶子类型");
+		input(&ru, 8, 1);
+		g->target = static_cast<Log::Target>(ru);
+		break;
+	case 2:
+		output("请输入欲修改的距离(米)");
+		input(&ru, 2100000000, 0);
+		g->distance = ru;
+		break;
+	}
+}
+//T
+
+void Menu_game_addround(Log::Game* g)
+{
+	system("cls");
+	Top("添加轮次");
+	bool con = true;
+	int r, p;
+	Log::Arrow* a;
+	Log::Round* ro = new Log::Round();
+	if (!g->add_round(ro)) {
+		output("已达单次比赛轮次上限,无法添加");
+		return;
+	}
+	while(con) {
+		system("cls");
+		Top("记录箭矢数据");
+		ro->Show_arrow();
+		output("请输入操作类型\n1.添加箭矢\n2.退出记录");
+		input(&r, 2, 1);
+		switch (r)
 		{
 		case 1:
-			//rectangle_one_row("修改现有数据"); 
-			Menu_input_edit(s);
+			output("请输入环" + (string)((g->target == Log::Target::hou) ? ("(中心黄5+输入6)(M输入0)") : ("(中心X输入11)(M输入0)")));
+			input(&r, (g->target == Log::Target::hou ? 6 : 11), 0);
+			output("请输入方位(12代表12点钟方向,以此类推)");
+			input(&p, 12, 1);
+			a = new Log::Arrow(r, p);
+			if (!ro->add_arrow(a)) {
+				output("已达单轮箭矢上限,无法添加");
+				con = false;
+			}
 			break;
 		case 2:
-			//rectangle_one_row("添加新数据"); 
-			Menu_input_add(s);
+			con = false;
 			break;
-		case 3:con = false; break;
-		default:
+		}
+	}
+}
+//T
+
+void Menu_addgame(Log* s)
+{
+	system("cls");
+	Top("添加比赛记录");
+	bool con = true;
+	int tar,dis;
+	Log::Game* g;
+	output("添加比赛记录");
+	output("1.侯靶\n2.40全环靶\n3.60全环靶\n4.80全环靶\n5.122全环靶\n6.40半环靶\n7.60半环靶\n8.80半环靶\n请输入比赛用靶");
+	input(&tar, 8, 1);
+	output("请输入比赛距离(米)");
+	input(&dis, 2100000000, 0);
+	g = new Log::Game(time(0));
+	g->target = static_cast<Log::Target>(tar);
+	g->distance = dis;
+	s->add_game(g);
+	while (con)
+	{
+		system("cls");
+		Top("添加轮次记录");
+		output("1.添加轮次\n2.返回\n请输入操作类型");
+		input(&tar, 2, 1);
+		switch (tar)
+		{
+		case 1:
+			Menu_game_addround(g);
+			break;
+		case 2:
+			con = false;
 			break;
 		}
 	}
 }
 
-void Menu_input_add(Log* s)
+void Menu_game_round(Log::Game* g)
 {
-
-}
-
-void Menu_input_edit(Log* s)
-{
-	s->Show();
-	rectangle_one_row("请选择要修改的比赛数据");
-	int ru,index;
-	input(&index, s->game_num, 1);
-	output("操作类型:\n1.修改\n2.删除\n3.选择轮次数据\n");
-	input(&ru, 3, 1);
-	switch (ru)
-	{
-	case 1:
-		Menu_input_edit_edit(s);
-		break;
-	case 2:
-		Menu_input_edit_delete(s);
-		break;
+	system("cls");
+	Top("修改轮次数据");
+	bool con = true;
+	g->Show_round();
+	output("请选择要修改的轮次数据");
+	int ru, index, r, p;
+	Log::Arrow* a;
+	input(&index, g->round_num, 1);
+	index--;
+	while (con) {
+		system("cls");
+		Top("修改轮次数据");
+		output("操作类型:\n1.添加箭矢\n2.删除箭矢\n3.删除该轮次\n4.返回");
+		input(&ru, 4, 1);
+		switch (ru)
+		{
+		case 1:
+			output("请输入环" + (string)((g->target == Log::Target::hou) ? ("(中心黄5+输入6)(M输入0)") : ("(中心X输入11)(M输入0)")));
+			input(&r, (g->target == Log::Target::hou ? 6 : 11), 0);
+			output("请输入方位(12代表12点钟方向,以此类推)");
+			input(&p, 12, 1);
+			a = new Log::Arrow(r, p);
+			g->round[index]->add_arrow(a);
+			break;
+		case 2:
+			g->round[index]->Show_arrow();
+			output("请选择欲删除的箭矢编号");
+			input(&ru, g->round[index]->arrow_num, 1);
+			ru--;
+			g->round[index]->Clear_arrow(ru);
+			break;
+		case 3:
+			g->Clear_round(index);
+			con = false;
+			break;
+		case 4:
+			con = false;
+			break;
+		}
 	}
 }
-
-void Menu_input_edit_edit(Log* s)
-{
-	//int index = *ru;
-	int ru;
-	rectangle_one_row("请选择要修改的数据项");
-	output("1.靶子类型\n2.距离\n");
-	input(&ru, 2, 1);
-}
-
-void Menu_input_edit_delete(Log* s)
-{
-	//s->Clear(*ru - 1);
-}
+//T
 
 void Menu_import(Log* s)
 {
@@ -151,67 +266,51 @@ void Menu_export(Log* s)
 
 void Menu_view(Log* s)
 {
-	Introduce_view(s);
-	s->Show();
-}
-
-void Menu_scoremaster(Log* s)
-{
-	int ru;
-	bool con = true;
-	while (con) {
-		Introduce_scoremaster(s);
-		input(&ru, 3, 1);
-		switch (ru)
-		{
-		case 1:s->set_master(); break;
-		case 2:
-			s->Export();
-			s->Clear_all();
-			s->set_master();
-			break;
-		case 3:con = false; break;
-		default:
-			break;
+	int gi,ri;
+	bool con1=true, con2=true, con3=true;
+	while (con1)
+	{
+		Introduce_view(s);
+		s->Show();
+		if (!s->game_num) {
+			output("无比赛");
+			Stop();
+			return;
+		}
+		output("请输入欲查看比赛编号,0是返回");
+		input(&gi, s->game_num, 0);
+		if (!gi)break;
+		gi--;
+		while (con2) {
+			system("cls");
+			Top("查看比赛");
+			s->game[gi]->Show_round();
+			if (!s->game[gi]->round_num) {
+				Stop();
+				return;
+			}
+			output("请输入欲查看轮次编号,0是返回");
+			input(&ri, s->game[gi]->round_num, 0);
+			if (!ri)break;
+			ri--;
+			system("cls");
+			Top("查看轮次");
+			s->game[gi]->round[ri]->Show_arrow();
+			if (!s->game[gi]->round[ri]->arrow_num) {
+				Stop();
+				return;
+			}
+			Stop();
 		}
 	}
 }
-//D
-
-void Menu_delete(Log* s)
-{
-	int ru;
-	bool con = true;
-	while (con) {
-		if (s->game_num == 0) {
-			rectangle_one_row("已无可删除内容");
-			con = false;
-			continue;
-		}
-		Introduce_delete(s);
-		input(&ru, 2, 0);
-		switch (ru)
-		{
-		case 0:
-			s->Show();
-			input(&ru, s->game_num, 1);
-			s->Clear(0);
-			break;
-		case 1:
-			s->Clear_all(); 
-			con = false;
-			break;
-		case 2:con = false;
-		}
-	}
-}
-//D
+//T
 
 bool Log::Import(string filename)
 {
 	json* j = open_json(filename);
 	if (j == nullptr) {
-		rectangle_one_row("无法导入此文件");
+		output("无法导入此文件");
 		system("pause");
 		return false;
 	}
@@ -229,7 +328,7 @@ bool Log::Import(string filename)
 		this->add_game(game);
 
 		for (json& round_json : game_json["round"]) {
-			Round* round = new Round(round_json["target"], round_json["distance"]);
+			Round* round = new Round();
 			game->add_round(round);
 			for (json& arrow_json : round_json["arrow"]) {
 				round->add_arrow(new Arrow(arrow_json["ring"], arrow_json["position"]));
@@ -261,8 +360,6 @@ bool Log::Export()
 		for (int i = 0; i < temp->round_num; ++i) {
 			Round* r = temp->round[i];
 			json j_r;
-			j_r["target"] = r->target;
-			j_r["distance"] = r->distance;
 			j_r["arrow"] = json::array();
 			for (int k = 0; k < r->arrow_num; ++k) {
 				Arrow* a = r->arrow[k];
@@ -300,10 +397,9 @@ void Log::Clear(int index)
 	for (int i = index; i < game_num - 1; i++) {
 		game[i] = game[i + 1];
 	}
-	if (game_num > 1)game[game_num] = nullptr;
+	game[--game_num] = nullptr;
 	g->Clear_all_round();
 	delete g;
-	game_num--;
 	game.resize(game.size() - 1);
 }
 //T
@@ -318,11 +414,15 @@ void Log::add_game(Game* ga)
 
 void Log::Show()
 {
-	rectangle_one_row("成绩归属者:" + *master);
-	rectangle_one_row("总轮数:" + to_string(game_num));
-	rectangle_one_row("总组数:" + to_string(round_num_all));
-	rectangle_one_row("总箭数:" + to_string(arrow_num_all));
-	rectangle_one_row("离散值(越小越好):" + to_string(lisan));
+	output("成绩归属者:" + *master);
+	output("总轮数:" + to_string(game_num));
+	output("总组数:" + to_string(round_num_all));
+	output("总箭数:" + to_string(arrow_num_all));
+	output("离散值(越小越好):" + to_string(lisan));
+	if (game_num == 0) {
+		output("无比赛");
+		return;
+	}
 	string o = "编号          时间                          离散值     总成绩       靶子类型    距离\n";
 	string t;
 	int i = 1;
@@ -333,6 +433,7 @@ void Log::Show()
 	output(o);
 	//rectangle_one_row(o);
 }
+//T
 
 void Log::set_master()
 {
@@ -340,51 +441,59 @@ void Log::set_master()
 	cout << COLOR_OPTION << "请输入欲修改归属者的名字: " << COLOR_RESET;
 	cin >> *master;
 }
+//T
 
 Log::Log()
 {
 	if (!Import((*open_json("default.json"))["path"])) {
-		rectangle_one_row("无法打开上次打开的文件");
+		output("无法打开上次打开的文件");
 		system("pause");
 	}
 }
+//T
 
 int Log::Round::Score()
 {
-	int re = 0, i, j;
+	int re = 0, j;
 	for (j = 0; j < arrow_num; j++) {
 		re += arrow[j]->ring;
 		if (arrow[j]->ring == 11)re--;
 	}
 	return re;
 }
+//T
 
 int Log::Round::Score_full()
 {
-	return arrow_num * (target == hou ? 5 : 10);
+	return arrow_num * (parent->target == hou ? 5 : 10);
 }
+//T
 
 void Log::Round::Show_arrow()
 {
+	if (arrow_num == 0) {
+		output("无箭矢");
+		return;
+	}
 	string o = "编号      环    方位\n";
 	int in = 1;
 	for (int i = 0; i < arrow_num; i++) {
-		o += format("{:<14d}", in++) + format("{:<d}", arrow[i]->ring) + format("{:<d}点钟方向", arrow[i]->position) + "\n";
+		o += format("{:<10d}", in++) + format("{:<6d}", arrow[i]->ring) + format("{:<d}点钟方向", arrow[i]->position) + "\n";
 	}
 	output(o);
 	//rectangle_one_row(o);
 }
+//T
 
-Log::Round::Round(Target t, int d)
+Log::Round::Round()
 {
-	target = t;
-	distance = d;
 	arrow_num = 0;
 }
+//T
 
 bool Log::Round::add_arrow(Arrow* arr)
 {
-	if (arrow_num >= 23)return false;
+	if (arrow_num >= 24)return false;
 	arr->parent = this;
 	arrow[arrow_num] = arr;
 	arrow_num++;
@@ -392,6 +501,7 @@ bool Log::Round::add_arrow(Arrow* arr)
 	parent->parent->arrow_num_all++;
 	return true;
 }
+//T
 
 void Log::Round::Clear_arrow(int index)
 {
@@ -399,12 +509,12 @@ void Log::Round::Clear_arrow(int index)
 	for (int i = index; i < arrow_num - 1; i++) {
 		arrow[i] = arrow[i + 1];
 	}
-	arrow[arrow_num] = nullptr;
-	arrow_num--;
+	arrow[--arrow_num] = nullptr;
 	parent->arrow_num--;
 	parent->parent->arrow_num_all--;
 	delete anchor;
 }
+//T
 
 void Log::Round::Clear_all_arrow()
 {
@@ -415,38 +525,46 @@ void Log::Round::Clear_all_arrow()
 	parent->arrow_num -= arrow_num;
 	arrow_num = 0;
 }
+//T
 
 void Log::Game::Show_round()
 {
-	string o = "编号      箭矢总数    离散值     总成绩       靶子类型    距离\n";
+	if (arrow_num == 0) {
+		output("无轮次");
+		return;
+	}
+	string o = "编号      箭矢总数    离散值     总成绩\n";
 	int in = 1;
 	for (int i = 0; i < round_num; i++) {
-		o += format("{:<14d}", in++) + format("{:<d}", round[i]->arrow_num) + format("{:<11.4f}", round[i]->lisan) + format("{:0>3d} / {:<9d}", round[i]->Score(), round[i]->Score_full()) + format("{:<12s}", TargetToString(round[i]->target)) + format("{:<d}米", round[i]->distance) + "\n";
+		o += format("{:<10d}", in++) + format("{:<12d}", round[i]->arrow_num) + format("{:<11.4f}", round[i]->lisan) + format("{:0>3d} / {:<9d}", round[i]->Score(), round[i]->Score_full()) + "\n";
 	}
 	output(o);
 	//rectangle_one_row(o);
 }
+//T
 
 int Log::Game::Score_full()
 {
-	return round_num * arrow_num * (target == hou ? 5 : 10);
+	return arrow_num * (target == hou ? 5 : 10);
 }
+//T
 
 int Log::Game::Score()
 {
 	int re = 0, i, j;
 	for (i = 0; i < round_num; i++) {
-		for (j = 0; j < arrow_num; j++) {
+		for (j = 0; j < round[i]->arrow_num; j++) {
 			re += round[i]->arrow[j]->ring;
 			if (round[i]->arrow[j]->ring == 11)re--;
 		}
 	}
 	return re;
 }
+//T
 
 bool Log::Game::add_round(Round* ro)
 {
-	if (round_num >= 23)return false;
+	if (round_num >= 24)return false;
 	ro->parent = this;
 	round[round_num] = ro;
 	round_num++;
@@ -454,6 +572,7 @@ bool Log::Game::add_round(Round* ro)
 	arrow_num += ro->arrow_num;
 	return true;
 }
+//T
 
 void Log::Game::Clear_round(int index)
 {
@@ -467,6 +586,7 @@ void Log::Game::Clear_round(int index)
 	parent->round_num_all--;
 	round_num--;
 }
+//T
 
 void Log::Game::Clear_all_round()
 {
@@ -477,6 +597,7 @@ void Log::Game::Clear_all_round()
 	parent->round_num_all -= round_num;
 	round_num = 0;
 }
+//T
 
 Log::Game::Game(time_t time)
 {
@@ -486,6 +607,7 @@ Log::Game::Game(time_t time)
 	round_num = 0;
 	arrow_num = 0;
 }
+//T
 
 Log::Arrow::Arrow(int r, int p)
 {
@@ -493,6 +615,7 @@ Log::Arrow::Arrow(int r, int p)
 	ring = r;
 	position = p;
 }
+//T
 
 bool Log::Check_same(Game* g)
 {
@@ -501,6 +624,7 @@ bool Log::Check_same(Game* g)
 	}
 	return false;
 }
+//T
 
 const char* Log::TargetToString(Target ta)
 {
@@ -535,3 +659,4 @@ const char* Log::TargetToString(Target ta)
 		break;
 	}
 }
+//T
