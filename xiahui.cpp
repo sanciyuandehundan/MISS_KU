@@ -44,7 +44,7 @@ json* open_json(string s)
 {
     ifstream file(s);
     if (!file.is_open()) {
-        cout << "打开文件失败" << endl;
+        //cout << "打开文件失败" << endl;
         return nullptr;
     }
     json* j = new json();
@@ -57,9 +57,12 @@ json* open_json(string s)
 void default_json(string s)
 {
     json* j = open_json("default.json");
+    if (j == nullptr) {
+        j = new json();
+    }
     ofstream file("default.json");
     if (!file.is_open()) {
-        cout << "打开文件失败" << endl;
+        //cout << "打开文件失败" << endl;
         return;
     }
     (*j)["path"] = s;

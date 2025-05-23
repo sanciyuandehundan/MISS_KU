@@ -35,7 +35,7 @@ public:
 		/*
 		显示箭矢信息
 		*/
-		void Show_arrow();
+		bool Show_arrow();
 		/*
 		轮次构造函数,t靶子,d距离
 		*/
@@ -65,7 +65,7 @@ public:
 		/*
 		显示轮次信息
 		*/
-		void Show_round();
+		bool Show_round();
 		/*
 		计算满分
 		*/
@@ -128,7 +128,7 @@ public:
 	/*
 	显示成绩信息
 	*/
-	void Show();
+	bool Show();
 	/*
 	修改归属者名字
 	*/
@@ -157,7 +157,7 @@ void Menu_game_addround(Log::Game* g);
 /*
 添加比赛菜单,输入空间指针,成绩实例指针
 */
-void Menu_addgame(Log* s);
+void Menu_scoremaster(Log* s);
 /*
 输入菜单_修改_轮次,输入空间指针,成绩实例指针
 */
