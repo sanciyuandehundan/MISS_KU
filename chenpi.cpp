@@ -31,7 +31,8 @@ void Introduce_main(Log* s) {
     cout << "│     " << COLOR_OPTION << "3. 导入成绩文件" << COLOR_MENU << "        │" << endl;
     cout << "│     " << COLOR_OPTION << "4. 导出成绩文件" << COLOR_MENU << "        │" << endl;
     cout << "│     " << COLOR_OPTION << "5. 查看过往成绩" << COLOR_MENU << "        │" << endl;
-    cout << "│     " << COLOR_OPTION << "6. 退出程序    " << COLOR_MENU << "        │" << endl;
+    cout << "│     " << COLOR_OPTION << "6. 修改归属者  " << COLOR_MENU << "        │" << endl;
+    cout << "│     " << COLOR_OPTION << "7. 退出程序    " << COLOR_MENU << "        │" << endl;
     cout << "└────────────────────────────┘" << endl;
 }
 

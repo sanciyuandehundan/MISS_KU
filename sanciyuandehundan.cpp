@@ -22,14 +22,14 @@ void Menu_main(Log* s)
 	int ru;
 	while (con) {
 		Introduce_main(s);
-		input(&ru, 6, 1);
+		input(&ru, 7, 1);
 		switch (ru)
 		{
 		case 1://成绩修改
 			Menu_game(s);
 			break;
 		case 2://成绩添加
-			Menu_scoremaster(s);
+			Menu_addgame(s);
 			break;
 		case 3://成绩导入
 			Menu_import(s);
@@ -40,7 +40,10 @@ void Menu_main(Log* s)
 		case 5://成绩查询
 			Menu_view(s);
 			break;
-		case 6://关闭程序
+		case 6:
+			Menu_Logmaster(s);
+			break;
+		case 7://关闭程序
 			s->Export();
 			con = false;
 			break;
@@ -147,15 +150,12 @@ void Menu_game_addround(Log::Game* g)
 }
 //T
 
-void Menu_scoremaster(Log* s)
+void Menu_addgame(Log* s)
 {
 	system("cls");
-	Top("修改成绩归属者");
+	Top("添加比赛记录");
 	bool con = true;
 	int tar,dis;
-	output("1.修改归属者名字\n2.添加新成绩\n3.返回\n请输入操作类型");
-	input(&tar, 3, 1);
-
 	Log::Game* g;
 	output("1.侯靶\n2.40全环靶\n3.60全环靶\n4.80全环靶\n5.122全环靶\n6.40半环靶\n7.60半环靶\n8.80半环靶\n请输入比赛用靶");
 	input(&tar, 8, 1);
@@ -311,6 +311,25 @@ void Menu_view(Log* s)
 		}
 	}
 }
+
+void Menu_Logmaster(Log* s)
+{
+	system("cls");
+	Top("归属者修改");
+	int ru;
+	output("1.修改该份成绩归属者\n2.开始记录另一个归属者的成绩\n请输入操作类型");
+	input(&ru, 2, 1);
+	switch (ru)
+	{
+	case 1:s->set_master(); break;
+	case 2:
+		s->Export();
+		s->Clear_all();
+		s->set_master();
+		Menu_addgame(s);
+		break;
+	}
+}
 //T
 
 bool Log::Import(string filename)
@@ -441,8 +460,7 @@ bool Log::Show()
 
 void Log::set_master()
 {
-	cout << COLOR_RESET;
-	cout << COLOR_OPTION << "请输入欲修改归属者的名字: " << COLOR_RESET;
+	output("请输入欲修改归属者名字");
 	cin >> *master;
 }
 //T

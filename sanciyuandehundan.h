@@ -157,7 +157,7 @@ void Menu_game_addround(Log::Game* g);
 /*
 添加比赛菜单,输入空间指针,成绩实例指针
 */
-void Menu_scoremaster(Log* s);
+void Menu_addgame(Log* s);
 /*
 输入菜单_修改_轮次,输入空间指针,成绩实例指针
 */
@@ -174,3 +174,7 @@ void Menu_export(Log* s);
 展示成绩菜单,输入空间指针,成绩实例指针
 */
 void Menu_view(Log* s);
+/*
+归属者菜单
+*/
+void Menu_Logmaster(Log* s);
