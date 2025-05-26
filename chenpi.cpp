@@ -129,6 +129,7 @@ void output(string s)
     }
     int length = 0;
     int max = 0;
+    int j;
     for (char c : s) {
         if (c != '\n') length++;
         else {
@@ -143,13 +144,20 @@ void output(string s)
     }
     cout << "¨[" << endl;
     cout << "¨U" << COLOR_OPTION;
+    length = 0;
     for (unsigned long long i = 0; i < s.length(); i++) {
         if (s[i] != '\n') {
             cout << s[i];
+            length++;
         }
         else {
+            while (length < max) {
+                cout << ' ';
+                length++;
+            }
             cout << COLOR_MENU << "¨U" << COLOR_OPTION << endl;
             if (s[i + 1] != '\0') cout << COLOR_MENU << "¨U" << COLOR_OPTION;
+            length = 0;
         }
     }
     cout << COLOR_MENU << "¨^";
