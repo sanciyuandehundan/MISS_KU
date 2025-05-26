@@ -61,6 +61,7 @@ public:
 		int distance;
 		int round_num;
 		int arrow_num;
+		long double lisan;
 		Round* round[24];
 		/*
 		显示轮次信息

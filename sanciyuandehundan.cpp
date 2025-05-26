@@ -637,6 +637,7 @@ Log::Game::Game(time_t time)
 	gametime = time;
 	distance = 0;
 	round_num = 0;
+	lisan = 0;
 	arrow_num = 0;
 }
 //T
