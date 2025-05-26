@@ -144,6 +144,7 @@
     <ClInclude Include="xiahui.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="default.json" />
     <None Include="ex.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
