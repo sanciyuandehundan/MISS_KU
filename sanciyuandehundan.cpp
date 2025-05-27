@@ -409,6 +409,7 @@ void Log::Clear_all()
 	}
 	game_num = 0;
 	game.resize(0);
+	Lisan_average_g();
 }
 
 void Log::Clear(int index)
@@ -421,6 +422,7 @@ void Log::Clear(int index)
 	g->Clear_all_round();
 	delete g;
 	game.resize(game.size() - 1);
+	Lisan_average_g();
 }
 
 void Log::add_game(Game* ga)
@@ -558,6 +560,7 @@ void Log::Round::Clear_arrow(int index)
 	parent->arrow_num--;
 	parent->parent->arrow_num_all--;
 	delete anchor;
+	Lisan();
 }
 
 void Log::Round::Clear_all_arrow()
@@ -568,6 +571,7 @@ void Log::Round::Clear_all_arrow()
 	parent->parent->arrow_num_all -= arrow_num;
 	parent->arrow_num -= arrow_num;
 	arrow_num = 0;
+	Lisan();
 }
 
 void Log::Game::Lisan_average()
@@ -636,6 +640,7 @@ void Log::Game::Clear_round(int index)
 	delete anchor;
 	parent->round_num_all--;
 	round_num--;
+	Lisan_average();
 }
 
 void Log::Game::Clear_all_round()
@@ -646,6 +651,7 @@ void Log::Game::Clear_all_round()
 	}
 	parent->round_num_all -= round_num;
 	round_num = 0;
+	Lisan_average();
 }
 
 Log::Game::Game(time_t time)
