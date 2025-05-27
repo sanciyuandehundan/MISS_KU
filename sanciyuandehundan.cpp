@@ -120,7 +120,7 @@ void Menu_game_addround(Log::Game* g)
 		output("已达单次比赛轮次上限,无法添加");
 		return;
 	}
-	while(con) {
+	while (con) {
 		system("cls");
 		Top("记录箭矢数据");
 		ro->Show_arrow();
@@ -131,7 +131,7 @@ void Menu_game_addround(Log::Game* g)
 		case 1:
 			output("请输入环" + (string)((g->target == Log::Target::hou) ? ("(中心黄5+输入6)(M输入0)") : ("(中心X输入11)(M输入0)")));
 			input(&r, (g->target == Log::Target::hou ? 6 : 11), 0);
-			if (r != 6 && r != 11 &&r!=0) {
+			if (r != 6 && r != 11 && r != 0) {
 				output("请输入方位(12代表12点钟方向,以此类推)");
 				input(&p, 12, 1);
 			}
@@ -156,7 +156,7 @@ void Menu_addgame(Log* s)
 	system("cls");
 	Top("添加比赛记录");
 	bool con = true;
-	int tar,dis;
+	int tar, dis;
 	Log::Game* g;
 	output("1.侯靶\n2.40全环靶\n3.60全环靶\n4.80全环靶\n5.122全环靶\n6.40半环靶\n7.60半环靶\n8.80半环靶\n请输入比赛用靶");
 	input(&tar, 8, 1);
@@ -272,8 +272,8 @@ void Menu_export(Log* s)
 
 void Menu_view(Log* s)
 {
-	int gi,ri;
-	bool con1=true, con2=true, con3=true;
+	int gi, ri;
+	bool con1 = true, con2 = true, con3 = true;
 	while (con1)
 	{
 		Introduce_view(s);
@@ -285,7 +285,7 @@ void Menu_view(Log* s)
 		input(&gi, s->game_num, 0);
 		if (!gi)break;
 		gi--;
-		Log::Game& g=*(s->game[gi]);
+		Log::Game& g = *(s->game[gi]);
 		while (con2) {
 			system("cls");
 			Top("查看比赛");
@@ -432,7 +432,7 @@ void Log::add_game(Game* ga)
 
 bool Log::Show()
 {
-	output("成绩归属者:" + *master+'\n'+ "总轮数:" + to_string(game_num)+'\n'+ "总组数:" + to_string(round_num_all)+'\n'+ "总箭数:" + to_string(arrow_num_all)+'\n'+ "离散值(越小越好):" + to_string(lisan_average));
+	output("成绩归属者:" + *master + '\n' + "总轮数:" + to_string(game_num) + '\n' + "总组数:" + to_string(round_num_all) + '\n' + "总箭数:" + to_string(arrow_num_all) + '\n' + "离散值(越小越好,此数值表示的是箭矢分布密集度,而非分数):" + to_string(lisan_average));
 	if (game_num == 0) {
 		output("无比赛");
 		return false;
@@ -481,7 +481,7 @@ void Log::Round::Lisan()
 		return;
 	}
 	double sum_d2 = 0.0, sum_x = 0.0, sum_y = 0.0;
-	for (int i = 0; i < arrow_num;i++) {
+	for (int i = 0; i < arrow_num; i++) {
 		d = maxScore - arrow[i]->ring;
 		theta = arrow[i]->position * M_PI / 6.0;   // 12 刻度：360°/12 = 30° = π/6
 		x = d * cos(theta);
