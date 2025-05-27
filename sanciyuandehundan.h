@@ -25,6 +25,10 @@ public:
 		int arrow_num;
 		Arrow* arrow[24];
 		/*
+		计算离散值
+		*/
+		void Lisan();
+		/*
 		计算总分
 		*/
 		int Score();
@@ -61,8 +65,12 @@ public:
 		int distance;
 		int round_num;
 		int arrow_num;
-		long double lisan;
+		long double lisan_average;
 		Round* round[24];
+		/*
+		计算平均离散值
+		*/
+		void Lisan_average();
 		/*
 		显示轮次信息
 		*/
@@ -97,7 +105,11 @@ public:
 	int game_num;
 	int round_num_all;
 	int arrow_num_all;
-	long double lisan;
+	long double lisan_average;
+	/*
+	计算平均离散值
+	*/
+	void Lisan_average_g();
 	/*
 	检查是否有相同时间的比赛
 	*/

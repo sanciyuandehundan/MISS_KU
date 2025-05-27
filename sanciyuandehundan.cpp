@@ -50,7 +50,6 @@ void Menu_main(Log* s)
 		}
 	}
 }
-//T
 
 void Menu_game(Log* s)
 {
@@ -86,7 +85,6 @@ void Menu_game(Log* s)
 		break;
 	}
 }
-//T
 
 void Menu_game_amend(Log::Game* g)
 {
@@ -109,7 +107,6 @@ void Menu_game_amend(Log::Game* g)
 		break;
 	}
 }
-//T
 
 void Menu_game_addround(Log::Game* g)
 {
@@ -134,8 +131,13 @@ void Menu_game_addround(Log::Game* g)
 		case 1:
 			output("请输入环" + (string)((g->target == Log::Target::hou) ? ("(中心黄5+输入6)(M输入0)") : ("(中心X输入11)(M输入0)")));
 			input(&r, (g->target == Log::Target::hou ? 6 : 11), 0);
-			output("请输入方位(12代表12点钟方向,以此类推)");
-			input(&p, 12, 1);
+			if (r != 6 && r != 11 &&r!=0) {
+				output("请输入方位(12代表12点钟方向,以此类推)");
+				input(&p, 12, 1);
+			}
+			else {
+				p = 0;
+			}
 			a = new Log::Arrow(r, p);
 			if (!ro->add_arrow(a)) {
 				output("已达单轮箭矢上限,无法添加");
@@ -148,7 +150,6 @@ void Menu_game_addround(Log::Game* g)
 		}
 	}
 }
-//T
 
 void Menu_addgame(Log* s)
 {
@@ -230,7 +231,6 @@ void Menu_game_round(Log::Game* g)
 		}
 	}
 }
-//T
 
 void Menu_import(Log* s)
 {
@@ -252,7 +252,6 @@ void Menu_import(Log* s)
 		}
 	}
 }
-//T
 
 void Menu_export(Log* s)
 {
@@ -270,7 +269,6 @@ void Menu_export(Log* s)
 		}
 	}
 }
-//T
 
 void Menu_view(Log* s)
 {
@@ -330,7 +328,6 @@ void Menu_Logmaster(Log* s)
 		break;
 	}
 }
-//T
 
 bool Log::Import(string filename)
 {
@@ -364,7 +361,6 @@ bool Log::Import(string filename)
 	delete j;
 	return true;
 }
-//T
 
 bool Log::Export()
 {
@@ -404,7 +400,6 @@ bool Log::Export()
 	file.close();
 	return true;
 }
-//T
 
 void Log::Clear_all()
 {
@@ -415,7 +410,6 @@ void Log::Clear_all()
 	game_num = 0;
 	game.resize(0);
 }
-//T
 
 void Log::Clear(int index)
 {
@@ -428,7 +422,6 @@ void Log::Clear(int index)
 	delete g;
 	game.resize(game.size() - 1);
 }
-//T
 
 void Log::add_game(Game* ga)
 {
@@ -436,11 +429,10 @@ void Log::add_game(Game* ga)
 	game.push_back(ga);
 	game_num++;
 }
-//T
 
 bool Log::Show()
 {
-	output("成绩归属者:" + *master+'\n'+ "总轮数:" + to_string(game_num)+'\n'+ "总组数:" + to_string(round_num_all)+'\n'+ "总箭数:" + to_string(arrow_num_all)+'\n'+ "离散值(越小越好):" + to_string(lisan));
+	output("成绩归属者:" + *master+'\n'+ "总轮数:" + to_string(game_num)+'\n'+ "总组数:" + to_string(round_num_all)+'\n'+ "总箭数:" + to_string(arrow_num_all)+'\n'+ "离散值(越小越好):" + to_string(lisan_average));
 	if (game_num == 0) {
 		output("无比赛");
 		return false;
@@ -450,20 +442,18 @@ bool Log::Show()
 	int i = 1;
 	for (Game* g : game) {
 		t = ctime(&(g->gametime));
-		o += format("{:<14d}", i++) + format("{:<30s}", t.substr(0, t.find_last_not_of("\r\n") + 1)) + format("{:<11.4f}", lisan) + format("{:0>3d}/{:<9d}", g->Score(), g->Score_full()) + format("{:<12s}", TargetToString(g->target)) + format("{:<d}米", g->distance) + "\n";
+		o += format("{:<14d}", i++) + format("{:<30s}", t.substr(0, t.find_last_not_of("\r\n") + 1)) + format("{:<11.4f}", lisan_average) + format("{:0>3d}/{:<9d}", g->Score(), g->Score_full()) + format("{:<12s}", TargetToString(g->target)) + format("{:<d}米", g->distance) + "\n";
 	}
 	output(o);
 	return true;
 	//rectangle_one_row(o);
 }
-//T
 
 void Log::set_master()
 {
 	output("请输入欲修改归属者名字");
 	cin >> *master;
 }
-//T
 
 Log::Log()
 {
@@ -476,11 +466,37 @@ Log::Log()
 		game_num = 0;
 		round_num_all = 0;
 		arrow_num_all = 0;
-		lisan = 0;
+		lisan_average = 0;
 		system("pause");
 	}
 }
-//T
+
+void Log::Round::Lisan()
+{
+	double theta, d, x, y;
+	int maxScore = parent->target == hou ? 6 : 11;
+	int N = arrow_num;
+	if (N == 0) {
+		lisan = 0;
+		return;
+	}
+	double sum_d2 = 0.0, sum_x = 0.0, sum_y = 0.0;
+	for (int i = 0; i < arrow_num;i++) {
+		d = maxScore - arrow[i]->ring;
+		theta = arrow[i]->position * M_PI / 6.0;   // 12 刻度：360°/12 = 30° = π/6
+		x = d * cos(theta);
+		y = d * sin(theta);
+
+		sum_d2 += d * d;
+		sum_x += x;
+		sum_y += y;
+	}
+
+	double mean_d2 = sum_d2 / N;
+	double mx = sum_x / N, my = sum_y / N;
+	double variance = mean_d2 - (mx * mx + my * my);
+	lisan = variance;  // 离散值，越小越集中
+}
 
 int Log::Round::Score()
 {
@@ -491,13 +507,11 @@ int Log::Round::Score()
 	}
 	return re;
 }
-//T
 
 int Log::Round::Score_full()
 {
 	return arrow_num * (parent->target == hou ? 5 : 10);
 }
-//T
 
 bool Log::Round::Show_arrow()
 {
@@ -514,13 +528,11 @@ bool Log::Round::Show_arrow()
 	return true;
 	//rectangle_one_row(o);
 }
-//T
 
 Log::Round::Round()
 {
 	arrow_num = 0;
 }
-//T
 
 bool Log::Round::add_arrow(Arrow* arr)
 {
@@ -530,9 +542,11 @@ bool Log::Round::add_arrow(Arrow* arr)
 	arrow_num++;
 	parent->arrow_num++;
 	parent->parent->arrow_num_all++;
+	Lisan();
+	parent->Lisan_average();
+	parent->parent->Lisan_average_g();
 	return true;
 }
-//T
 
 void Log::Round::Clear_arrow(int index)
 {
@@ -545,7 +559,6 @@ void Log::Round::Clear_arrow(int index)
 	parent->parent->arrow_num_all--;
 	delete anchor;
 }
-//T
 
 void Log::Round::Clear_all_arrow()
 {
@@ -556,7 +569,15 @@ void Log::Round::Clear_all_arrow()
 	parent->arrow_num -= arrow_num;
 	arrow_num = 0;
 }
-//T
+
+void Log::Game::Lisan_average()
+{
+	lisan_average = 0;
+	for (int i = 0; i < round_num; i++) {
+		lisan_average += round[i]->lisan;
+	}
+	lisan_average /= round_num;
+}
 
 bool Log::Game::Show_round()
 {
@@ -573,13 +594,11 @@ bool Log::Game::Show_round()
 	return true;
 	//rectangle_one_row(o);
 }
-//T
 
 int Log::Game::Score_full()
 {
 	return arrow_num * (target == hou ? 5 : 10);
 }
-//T
 
 int Log::Game::Score()
 {
@@ -592,7 +611,6 @@ int Log::Game::Score()
 	}
 	return re;
 }
-//T
 
 bool Log::Game::add_round(Round* ro)
 {
@@ -602,9 +620,10 @@ bool Log::Game::add_round(Round* ro)
 	round_num++;
 	parent->round_num_all++;
 	arrow_num += ro->arrow_num;
+	Lisan_average();
+	parent->Lisan_average_g();
 	return true;
 }
-//T
 
 void Log::Game::Clear_round(int index)
 {
@@ -618,7 +637,6 @@ void Log::Game::Clear_round(int index)
 	parent->round_num_all--;
 	round_num--;
 }
-//T
 
 void Log::Game::Clear_all_round()
 {
@@ -629,7 +647,6 @@ void Log::Game::Clear_all_round()
 	parent->round_num_all -= round_num;
 	round_num = 0;
 }
-//T
 
 Log::Game::Game(time_t time)
 {
@@ -637,10 +654,9 @@ Log::Game::Game(time_t time)
 	gametime = time;
 	distance = 0;
 	round_num = 0;
-	lisan = 0;
+	lisan_average = 0;
 	arrow_num = 0;
 }
-//T
 
 Log::Arrow::Arrow(int r, int p)
 {
@@ -648,7 +664,15 @@ Log::Arrow::Arrow(int r, int p)
 	ring = r;
 	position = p;
 }
-//T
+
+void Log::Lisan_average_g()
+{
+	lisan_average = 0;
+	for (int i = 0; i < game_num; i++) {
+		lisan_average += game[i]->lisan_average;
+	}
+	lisan_average /= game_num;
+}
 
 bool Log::Check_same(Game* g)
 {
@@ -657,7 +681,6 @@ bool Log::Check_same(Game* g)
 	}
 	return false;
 }
-//T
 
 const char* Log::TargetToString(Target ta)
 {
@@ -692,4 +715,3 @@ const char* Log::TargetToString(Target ta)
 		break;
 	}
 }
-//T

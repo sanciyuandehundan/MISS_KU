@@ -1,6 +1,6 @@
 #pragma once
 #define  _CRT_SECURE_NO_WARNINGS
-
+#define _USE_MATH_DEFINES
 // 定义一些颜色和样式常量
 #define COLOR_TITLE "\033[1;36m"  // 青色加粗
 #define COLOR_MENU "\033[1;33m"  // 黄色加粗
@@ -14,6 +14,7 @@
 #include<stdlib.h>
 #include<istream>
 #include <fstream>
+#include <cmath>
 #include<string>
 #include "json.hpp"
 using json = nlohmann::json;
